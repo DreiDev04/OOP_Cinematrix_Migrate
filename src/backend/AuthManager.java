@@ -26,9 +26,10 @@ public class AuthManager {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 
                 Session session = new Session(user.getUsername(), user.getUID());
-                new MainFrame(session);
+                new MainFrame(session).setVisible(true);
                 
                 System.out.println("User Found: " + user.getUsername());
+                return;
             }
         }
         System.out.println("User Not Found!");

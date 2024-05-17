@@ -9,7 +9,7 @@ public class TMDB_api {
     
     public HashMap<String, String> requestMovie = new HashMap<>();
     public HashMap<String, String> requestTV = new HashMap<>();
-
+    
     public TMDB_api() {
         
         requestMovie.put("getTrendingDay", "https://api.themoviedb.org/3/trending/movie/day?language=en-US");
