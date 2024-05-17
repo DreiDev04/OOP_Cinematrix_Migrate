@@ -617,6 +617,8 @@ public class ValidationForms extends javax.swing.JFrame {
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
             auth.login(txt_loginusername.getText(), txt_loginpassword.getText());
+            
+            setVisible(false);
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void btn_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signupActionPerformed

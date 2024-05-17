@@ -2,6 +2,7 @@ package cinematrix;
 
 import backend.Session;
 import cinematrix.API_Key.TMDB_api;
+import cinematrix.API_Key.TmdbClient;
 import java.io.IOException;
 
 import java.security.KeyManagementException;
@@ -20,13 +21,14 @@ import okhttp3.ResponseBody;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import cinematrix.Panels.Features;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Random;
+
+
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -63,15 +65,20 @@ public class MainFrame extends javax.swing.JFrame {
     //Declaration and Initialization
     TMDB_api tmdb = new TMDB_api();
     Session _currUser = new Session();
+    TmdbClient apiClient = new TmdbClient();
 
     public MainFrame(Session currUser) {
-
+        initComponents();
         if (currUser == null) {
             throw new IllegalArgumentException("currUser cannot be null");
         }
         _currUser = currUser;
 
+        
+        lbl_usernameDisplay.setText(_currUser.getUsername());
         //GET_PopularMovies();
+        apiClient.fetchPopularMovies();
+        
 //        Discover_TV(tmdb.requestTV.get("getNetflixOrigPH"));
 //
 //        main.add(new Features("Today"));
@@ -102,6 +109,7 @@ public class MainFrame extends javax.swing.JFrame {
         lbl_movieTitle = new javax.swing.JLabel();
         lbl_bgImg = new javax.swing.JLabel();
         main = new javax.swing.JPanel();
+        lbl_usernameDisplay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -168,6 +176,11 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0);
         flowLayout1.setAlignOnBaseline(true);
         main.setLayout(flowLayout1);
+
+        lbl_usernameDisplay.setText("jLabel1");
+        main.add(lbl_usernameDisplay);
+        lbl_usernameDisplay.getAccessibleContext().setAccessibleName("lbl_usernameDisplay");
+
         pnl_body.add(main, java.awt.BorderLayout.CENTER);
 
         body.setViewportView(pnl_body);
@@ -178,6 +191,7 @@ public class MainFrame extends javax.swing.JFrame {
         getAccessibleContext().setAccessibleDescription("");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
@@ -220,6 +234,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_movieDescription;
     private javax.swing.JLabel lbl_movieRatings;
     private javax.swing.JLabel lbl_movieTitle;
+    private javax.swing.JLabel lbl_usernameDisplay;
     private javax.swing.JPanel main;
     private javax.swing.JPanel nav;
     private javax.swing.JPanel pnl_body;
