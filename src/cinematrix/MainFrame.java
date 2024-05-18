@@ -1,5 +1,6 @@
 package cinematrix;
 
+import Splashscreen.LoadingSplash;
 import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
@@ -68,9 +69,11 @@ public class MainFrame extends javax.swing.JFrame {
     TMDB_api tmdb = new TMDB_api();
     Session _currUser = new Session();
     TmdbClient apiClient = new TmdbClient();
+    LoadingSplash loadingSplash;
 
-    public MainFrame(Session currUser) {
+    public MainFrame(Session currUser, LoadingSplash ls) {
         initComponents();
+        loadingSplash = ls;
         body.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         
         
@@ -80,15 +83,9 @@ public class MainFrame extends javax.swing.JFrame {
         _currUser = currUser;
 
         
-        //GET_PopularMovies();
         fetchAndDisplayMovies();
         
-//        Discover_TV(tmdb.requestTV.get("getNetflixOrigPH"));
-//
-//        main.add(new Features("Today"));
-//        main.add(new Features("Today"));
-//        main.add(new Features("Today"));
-//        main.add(new Features("Today"));
+
 
     }
     private void fetchAndDisplayMovies() {
@@ -108,14 +105,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void displayMovies(String moviesJson, String title) throws IOException {
         JSONObject jsonObject = new JSONObject(moviesJson);
         JSONArray results = jsonObject.getJSONArray("results");
-
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject movie = results.getJSONObject(i);
-//            String movieTitle = movie.getString("title");
-//            String moviePoster = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
-            
-        }
-        main.add(new Features(results, title));
+        
+        main.add(new Features(results, title, loadingSplash, this));
 
     }
 
@@ -162,6 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(nav, java.awt.BorderLayout.PAGE_START);
 
         body.setBackground(new java.awt.Color(255, 255, 255));
+        body.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         body.setMaximumSize(new java.awt.Dimension(1070, 670));
         body.setMinimumSize(new java.awt.Dimension(1070, 670));
         body.setPreferredSize(new java.awt.Dimension(1070, 670));
@@ -342,55 +334,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
-//    public void SetBGPoster(JSONArray results) throws IOException {
-//        ArrayList<JSONObject> TVList = new ArrayList<>();
-//        Random random = new Random();
-//
-//        for (int i = 0; i < results.length(); i++) {
-//            JSONObject movie = results.getJSONObject(i);
-//            TVList.add(movie);
-//        }
-//
-//        int randomIndex = random.nextInt(TVList.size());
-//        JSONObject randomElement = TVList.get(randomIndex);
-//        String posterPath = requestPoster(randomElement.getInt("id"));
-//        String posterPathURL = "https://image.tmdb.org/t/p/w500" + posterPath;
-//        System.out.println(posterPathURL);
-//
-//        try {
-//            URL posterUrl = new URL(posterPathURL);
-//            BufferedImage originalImage = ImageIO.read(posterUrl);
-//
-//            // Desired width and height
-//            int desiredWidth = 1080;
-//            int desiredHeight = 300;
-//
-//            // Calculate the scaling factor for both width and height
-//            double scaleX = (double) desiredWidth / originalImage.getWidth();
-//            double scaleY = (double) desiredHeight / originalImage.getHeight();
-//
-//            // Choose the larger scaling factor to ensure that the image fits within the desired dimensions
-//            double scale = Math.max(scaleX, scaleY);
-//
-//            // Scale the image using the chosen scaling factor with better quality
-//            int scaledWidth = (int) (originalImage.getWidth() * scale);
-//            int scaledHeight = (int) (originalImage.getHeight() * scale);
-//            BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
-//            Graphics2D g2d = scaledImage.createGraphics();
-//            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//            g2d.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
-//            g2d.dispose();
-//
-//            // Create a new ImageIcon with the scaled image
-//            ImageIcon icon = new ImageIcon(scaledImage);
-//
-//            // Set the ImageIcon to the JLabel
-//            lbl_bgImg.setIcon(icon);
-//
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
     public void SetBGPoster(JSONArray results) throws IOException {
         ArrayList<JSONObject> TVList = new ArrayList<>();
         Random random = new Random();

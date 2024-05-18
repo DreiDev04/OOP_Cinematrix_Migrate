@@ -59,7 +59,7 @@ public class ValidationForms extends javax.swing.JFrame {
         txt_confirmpassword = new javax.swing.JTextField();
         pnl_buttonsignup = new javax.swing.JPanel();
         btn_signup = new javax.swing.JButton();
-        btn_closeBtn = new javax.swing.JButton();
+        lbl_exit = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -605,18 +605,33 @@ public class ValidationForms extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Sign up", pnl_signup);
 
-        btn_closeBtn.setText("Close");
+        lbl_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/logout.png"))); // NOI18N
+        lbl_exit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lbl_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_exitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_exitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_exitMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_rightLayout = new javax.swing.GroupLayout(pnl_right);
         pnl_right.setLayout(pnl_rightLayout);
         pnl_rightLayout.setHorizontalGroup(
             pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_rightLayout.createSequentialGroup()
+            .addGroup(pnl_rightLayout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_closeBtn)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                .addGroup(pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_rightLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_rightLayout.createSequentialGroup()
+                        .addComponent(lbl_exit)
+                        .addContainerGap())))
         );
         pnl_rightLayout.setVerticalGroup(
             pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,11 +639,9 @@ public class ValidationForms extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_closeBtn)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(lbl_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
-
-        btn_closeBtn.getAccessibleContext().setAccessibleName("btn_closeBtn");
 
         getContentPane().add(pnl_right, java.awt.BorderLayout.CENTER);
 
@@ -657,6 +670,18 @@ public class ValidationForms extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Sign Up Successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btn_signupActionPerformed
+
+    private void lbl_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_exitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lbl_exitMouseClicked
+
+    private void lbl_exitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_exitMouseEntered
+        lbl_exit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_lbl_exitMouseEntered
+
+    private void lbl_exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_exitMouseExited
+        lbl_exit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_lbl_exitMouseExited
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -691,7 +716,6 @@ public class ValidationForms extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_closeBtn;
     private javax.swing.JButton btn_login;
     private javax.swing.JButton btn_signup;
     private javax.swing.JLabel jLabel1;
@@ -704,6 +728,7 @@ public class ValidationForms extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_age;
     private javax.swing.JLabel lbl_birthdate;
     private javax.swing.JLabel lbl_confirmpassword;
+    private javax.swing.JLabel lbl_exit;
     private javax.swing.JLabel lbl_firstname;
     private javax.swing.JLabel lbl_lastname;
     private javax.swing.JLabel lbl_loginpassword;

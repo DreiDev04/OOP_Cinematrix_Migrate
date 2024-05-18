@@ -26,22 +26,23 @@ public class moviepanel extends JPanel {
     private ImageIcon resizedIcon;
 
     public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
-//        System.out.println(movie);
         movieTile = movie.getString("title");
         ratings = "ratings: " + movie.getDouble("vote_average");
-
         String posterPathURL = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
 
+        
+        
+        
         URL posterUrl = new URL(posterPathURL);
         BufferedImage originalImage = ImageIO.read(posterUrl);
-        ImageIcon icon = new ImageIcon(originalImage);
-
         int desiredWidth = 170;
         int desiredHeight = 200;
         Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(resizedImage);
-//E5E7EB
-        ImageIcon image = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\170X190.png");
+        
+        
+        
+
         ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
         ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
         ImageIcon bookmarkIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\3.png");
