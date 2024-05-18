@@ -150,9 +150,22 @@ public class MainFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         nav = new javax.swing.JPanel();
         lbl_Logo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        asidePanel = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        MainLayeredPane = new javax.swing.JLayeredPane();
         body = new javax.swing.JScrollPane();
         pnl_body = new javax.swing.JPanel();
         hero = new javax.swing.JPanel();
@@ -166,36 +179,138 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(31, 41, 55));
         setMaximumSize(new java.awt.Dimension(1080, 720));
         setMinimumSize(new java.awt.Dimension(1080, 720));
         setPreferredSize(new java.awt.Dimension(1080, 720));
 
         nav.setBackground(new java.awt.Color(17, 24, 39));
+        nav.setForeground(new java.awt.Color(31, 41, 55));
         nav.setMaximumSize(new java.awt.Dimension(1070, 50));
         nav.setMinimumSize(new java.awt.Dimension(1070, 50));
         nav.setPreferredSize(new java.awt.Dimension(1070, 50));
-        nav.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        java.awt.GridBagLayout navLayout = new java.awt.GridBagLayout();
+        navLayout.columnWidths = new int[] {0};
+        navLayout.columnWeights = new double[] {1.0};
+        nav.setLayout(navLayout);
 
         lbl_Logo.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 36)); // NOI18N
         lbl_Logo.setForeground(new java.awt.Color(229, 231, 235));
         lbl_Logo.setText("CineMatrix");
-        nav.add(lbl_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 200, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 70, 0, 0);
+        nav.add(lbl_Logo, gridBagConstraints);
         lbl_Logo.getAccessibleContext().setAccessibleName("lbl_Logo");
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Log out");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
+        nav.add(jLabel5, gridBagConstraints);
 
         getContentPane().add(nav, java.awt.BorderLayout.PAGE_START);
 
-        body.setBackground(new java.awt.Color(255, 255, 255));
+        asidePanel.setBackground(new java.awt.Color(17, 22, 29));
+        asidePanel.setMaximumSize(new java.awt.Dimension(250, 10));
+        asidePanel.setMinimumSize(new java.awt.Dimension(50, 10));
+        asidePanel.setPreferredSize(new java.awt.Dimension(250, 10));
+
+        jPanel3.setBackground(new java.awt.Color(17, 22, 29));
+        jPanel3.setMaximumSize(new java.awt.Dimension(250, 75));
+        jPanel3.setMinimumSize(new java.awt.Dimension(250, 75));
+        jPanel3.setPreferredSize(new java.awt.Dimension(250, 75));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("<Username>");
+        jLabel1.setName(""); // NOI18N
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 30));
+
+        asidePanel.add(jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(17, 22, 29));
+        jPanel4.setMaximumSize(new java.awt.Dimension(250, 300));
+        jPanel4.setMinimumSize(new java.awt.Dimension(250, 300));
+        jPanel4.setPreferredSize(new java.awt.Dimension(250, 300));
+
+        jPanel5.setBackground(new java.awt.Color(75, 85, 99));
+        jPanel5.setMaximumSize(new java.awt.Dimension(250, 50));
+        jPanel5.setMinimumSize(new java.awt.Dimension(250, 50));
+        jPanel5.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jLabel2.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Search");
+        jPanel5.add(jLabel2, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel5);
+
+        jPanel6.setBackground(new java.awt.Color(75, 85, 99));
+        jPanel6.setMaximumSize(new java.awt.Dimension(250, 50));
+        jPanel6.setMinimumSize(new java.awt.Dimension(250, 50));
+        jPanel6.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Favorites");
+        jPanel6.add(jLabel3, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel6);
+
+        jPanel7.setBackground(new java.awt.Color(75, 85, 99));
+        jPanel7.setMaximumSize(new java.awt.Dimension(250, 50));
+        jPanel7.setMinimumSize(new java.awt.Dimension(250, 50));
+        jPanel7.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setBackground(new java.awt.Color(17, 22, 29));
+        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Bookmark");
+        jPanel7.add(jLabel4, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel7);
+
+        asidePanel.add(jPanel4);
+
+        getContentPane().add(asidePanel, java.awt.BorderLayout.WEST);
+
+        MainLayeredPane.setBackground(new java.awt.Color(31, 41, 55));
+        MainLayeredPane.setForeground(new java.awt.Color(31, 41, 55));
+        MainLayeredPane.setMaximumSize(new java.awt.Dimension(1080, 32767));
+        MainLayeredPane.setMinimumSize(new java.awt.Dimension(1080, 0));
+        MainLayeredPane.setPreferredSize(new java.awt.Dimension(1080, 100));
+        MainLayeredPane.setLayout(new java.awt.BorderLayout());
+
+        body.setBackground(new java.awt.Color(31, 41, 55));
+        body.setForeground(new java.awt.Color(31, 41, 55));
         body.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        body.setMaximumSize(new java.awt.Dimension(1070, 670));
-        body.setMinimumSize(new java.awt.Dimension(1070, 670));
-        body.setPreferredSize(new java.awt.Dimension(1070, 670));
+        body.setMaximumSize(new java.awt.Dimension(1080, 670));
+        body.setMinimumSize(new java.awt.Dimension(1080, 670));
+        body.setPreferredSize(new java.awt.Dimension(1080, 670));
 
         pnl_body.setBackground(new java.awt.Color(31, 41, 55));
+        pnl_body.setForeground(new java.awt.Color(31, 41, 55));
         pnl_body.setPreferredSize(new java.awt.Dimension(1080, 4000));
         pnl_body.setLayout(new java.awt.BorderLayout());
 
         hero.setBackground(new java.awt.Color(31, 41, 55));
+        hero.setForeground(new java.awt.Color(31, 41, 55));
         hero.setMaximumSize(new java.awt.Dimension(1920, 1080));
         hero.setMinimumSize(new java.awt.Dimension(1080, 300));
         hero.setPreferredSize(new java.awt.Dimension(1080, 300));
@@ -211,21 +326,22 @@ public class MainFrame extends javax.swing.JFrame {
         lbl_movieRatings.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         lbl_movieRatings.setForeground(new java.awt.Color(229, 231, 235));
         lbl_movieRatings.setText("<html>0.0 / 10</html>");
-        jPanel1.add(lbl_movieRatings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 80, 20));
+        jPanel1.add(lbl_movieRatings, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 80, 20));
 
         lbl_movieDescription.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         lbl_movieDescription.setForeground(new java.awt.Color(229, 231, 235));
         lbl_movieDescription.setText("<html> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. . </html>");
-        jPanel1.add(lbl_movieDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 470, 150));
+        jPanel1.add(lbl_movieDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 450, 150));
 
         lbl_movieTitle.setFont(new java.awt.Font("Cascadia Mono", 1, 24)); // NOI18N
         lbl_movieTitle.setForeground(new java.awt.Color(229, 231, 235));
         lbl_movieTitle.setText("<html> Movie Title</html>");
-        jPanel1.add(lbl_movieTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 440, 140));
+        jPanel1.add(lbl_movieTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 440, 140));
 
         hero.add(jPanel1, new java.awt.GridBagConstraints());
 
         jPanel2.setBackground(new java.awt.Color(31, 41, 55));
+        jPanel2.setForeground(new java.awt.Color(31, 41, 55));
         jPanel2.setMaximumSize(new java.awt.Dimension(540, 300));
         jPanel2.setMinimumSize(new java.awt.Dimension(540, 300));
         jPanel2.setPreferredSize(new java.awt.Dimension(540, 300));
@@ -243,6 +359,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnl_body.add(hero, java.awt.BorderLayout.PAGE_START);
 
         main.setBackground(new java.awt.Color(31, 41, 55));
+        main.setForeground(new java.awt.Color(31, 41, 55));
         main.setPreferredSize(new java.awt.Dimension(1077, 1080));
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0);
         flowLayout1.setAlignOnBaseline(true);
@@ -251,7 +368,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         body.setViewportView(pnl_body);
 
-        getContentPane().add(body, java.awt.BorderLayout.CENTER);
+        MainLayeredPane.add(body, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(MainLayeredPane, java.awt.BorderLayout.CENTER);
 
         getAccessibleContext().setAccessibleName("MainFrame");
         getAccessibleContext().setAccessibleDescription("");
@@ -292,10 +411,22 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane MainLayeredPane;
+    private javax.swing.JPanel asidePanel;
     private javax.swing.JScrollPane body;
     private javax.swing.JPanel hero;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lbl_Logo;
     private javax.swing.JLabel lbl_bgImg;
     private javax.swing.JLabel lbl_movieDescription;
