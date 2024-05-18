@@ -26,7 +26,7 @@ public class moviepanel extends JPanel {
     private ImageIcon resizedIcon;
 
     public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
-        System.out.println(movie);
+//        System.out.println(movie);
         movieTile = movie.getString("title");
         ratings = "ratings: " + movie.getDouble("vote_average");
 

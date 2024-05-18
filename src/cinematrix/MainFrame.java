@@ -4,6 +4,7 @@ import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
 import cinematrix.Panels.Features;
+import cinematrix.custom_ui.CustomScrollBarUI;
 import java.io.IOException;
 
 import java.security.KeyManagementException;
@@ -70,6 +71,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame(Session currUser) {
         initComponents();
+        body.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        
+        
         if (currUser == null) {
             throw new IllegalArgumentException("currUser cannot be null");
         }
@@ -107,8 +111,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         for (int i = 0; i < results.length(); i++) {
             JSONObject movie = results.getJSONObject(i);
-            String movieTitle = movie.getString("title");
-            String moviePoster = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
+//            String movieTitle = movie.getString("title");
+//            String moviePoster = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
             
         }
         main.add(new Features(results, title));
