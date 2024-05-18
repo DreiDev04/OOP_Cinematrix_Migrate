@@ -12,40 +12,40 @@ import cinematrix.custom_ui.CustomScrollBarUI;
 import javax.swing.JOptionPane;
 
 public class Features extends javax.swing.JPanel {
-    
+
     LoadingSplash loadingSplash;
     MainFrame mainFrame;
-    
+
     public Features(JSONArray results, String title, LoadingSplash ls, MainFrame mf) throws IOException {
         initComponents();
         loadingSplash = ls;
         mainFrame = mf;
         lbl_featureTitle.setText(title);
-        
+
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
         jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
         java.awt.EventQueue.invokeLater(() -> {
             new Thread(() -> {
                 try {
-                    int totalItems = results.length();                    
+                    int totalItems = results.length();
                     for (int i = 0; i < totalItems; i++) {
                         JSONObject movie = results.getJSONObject(i);
                         JPanel panel = new moviepanel(movie);
                         panel.setBackground(new Color(0x374151, false));
                         pnl_carousel.add(panel);
-                        
-                        double progress = (double) (i + 1) / totalItems * 100;                        
+
+                        double progress = (double) (i + 1) / totalItems * 100;
                         loadingSplash.updateProgress((int) progress, getMessageForProgress((int) progress));
-                        
+
                     }
                     loadingSplash.setVisible(false);
                     mainFrame.setVisible(true);
-                    
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
             }).start();
-            
+
         });
     }
     private static String getMessageForProgress(int progress) {
@@ -65,6 +65,7 @@ public class Features extends javax.swing.JPanel {
             return "Loading...";
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

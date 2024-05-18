@@ -90,13 +90,27 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private void fetchAndDisplayMovies() {
         try {
+            
             // Fetch popular movies
             String popularMoviesJson = apiClient.fetchPopularMovies();
             displayMovies(popularMoviesJson, "Popular Movies");
-
+            
+            // Fetch top-rated movies
+            String trendingDay = apiClient.fetchTrendingDay();
+            displayMovies(trendingDay, "Trending Today");
+            
+            // Fetch upcommingPH movies
+            String upcommingPH = apiClient.fetchUpcommingPH();
+            displayMovies(upcommingPH, "Up Comming in the Philippines");
+            
             // Fetch top-rated movies
             String topRatedMoviesJson = apiClient.fetchTopRatedMovies();
             displayMovies(topRatedMoviesJson, "Top Rated Movies");
+            
+            // Fetch Neflix Series
+            String netflixSeries = apiClient.fetchNetflix();
+            displayMovies(netflixSeries, "Netflix Series");
+            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,8 +123,7 @@ public class MainFrame extends javax.swing.JFrame {
         main.add(new Features(results, title, loadingSplash, this));
 
     }
-
-
+ 
     public MainFrame() {
         initComponents();
     }

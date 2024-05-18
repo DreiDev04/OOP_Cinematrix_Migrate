@@ -9,8 +9,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import cinematrix.API_Key.TMDB_api;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class TmdbClient {
@@ -18,8 +16,6 @@ public class TmdbClient {
     private final OkHttpClient client;
     TMDB_api api = new TMDB_api();
     String apiKey = api.getTOKEN();
-    
-    
     
     public TmdbClient() {
         this.client = new OkHttpClient();
@@ -57,26 +53,57 @@ public class TmdbClient {
             return response.body().string();
         }
     }
+    
+    public String fetchUpcommingPH() throws IOException {
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&region=ph")
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
 
-    // Method to handle the API response
-//    private List<MovieTemplate> handleResponse(Response response) throws IOException {
-//        List<MovieTemplate> movies = new ArrayList<>();
-//        if (response.isSuccessful()) {
-//            String jsonData = response.body().string();
-//            JSONObject jsonObject = new JSONObject(jsonData);
-//
-//            JSONArray results = jsonObject.getJSONArray("results");
-//            for (int i = 0; i < results.length(); i++) {
-//                JSONObject movie = results.getJSONObject(i);
-//                String title = movie.getString("title");
-//                String moviePoster = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
-//                movies.add(new MovieTemplate(title, moviePoster));
-//            }
-//        } else {
-//            System.out.println("Error: " + response.code() + " " + response.message());
-//        }
-//        return movies;
-//    }
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            return response.body().string();
+        }
+    }
+    public String fetchTrendingDay() throws IOException {
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/trending/movie/day?language=en-US")
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            return response.body().string();
+        }
+    }
+    
+    
+    public String fetchNetflix() throws IOException {
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=Ph&with_networks=213")
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            return response.body().string();
+        }
+    }
+    
+    
+    
 
     // Method to request poster image for a given movie ID
     public String requestPoster(int movieId) throws IOException {

@@ -18,30 +18,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class moviepanel extends JPanel {
+
     private String movieTile;
     private String ratings;
     private ImageIcon resizedIcon;
 
     public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
-        movieTile = movie.getString("title");
+        
+        try {
+            movieTile = movie.getString("title");
+        } catch (JSONException e) {
+            movieTile = movie.getString("original_name");
+        }
+        
         ratings = "ratings: " + movie.getDouble("vote_average");
         String posterPathURL = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
 
-        
-        
-        
         URL posterUrl = new URL(posterPathURL);
         BufferedImage originalImage = ImageIO.read(posterUrl);
         int desiredWidth = 170;
         int desiredHeight = 200;
         Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(resizedImage);
-        
-        
-        
 
         ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
         ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
@@ -85,7 +87,7 @@ public class moviepanel extends JPanel {
 
         // MOVIE TITLE PANEL
         JPanel pnl_titlepanel = new JPanel();
-        pnl_titlepanel.setBackground(new Color(0x374151, false));        
+        pnl_titlepanel.setBackground(new Color(0x374151, false));
         pnl_titlepanel.setLayout(new BorderLayout());
         pnl_titlepanel.setPreferredSize(new Dimension(170, 40)); // Set preferred size for titlePanel
         pnl_titlepanel.add(lbl_movietitle, BorderLayout.NORTH);

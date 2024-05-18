@@ -8,8 +8,8 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 
     @Override
     protected void configureScrollBarColors() {
-        this.thumbColor = new Color(207, 180, 149);  // A modern blue color
-        this.trackColor = new Color(156, 163, 175);  // Light gray for the track
+        this.thumbColor = new Color(207, 180, 149);  
+        this.trackColor = new Color(75, 85, 99);  
     }
 
     @Override
