@@ -59,6 +59,7 @@ public class ValidationForms extends javax.swing.JFrame {
         txt_confirmpassword = new javax.swing.JTextField();
         pnl_buttonsignup = new javax.swing.JPanel();
         btn_signup = new javax.swing.JButton();
+        btn_closeBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -77,6 +78,7 @@ public class ValidationForms extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(750, 500));
         setMinimumSize(new java.awt.Dimension(750, 500));
         setName("FormsJframe"); // NOI18N
+        setUndecorated(true);
         setResizable(false);
 
         pnl_left.setBackground(new java.awt.Color(0, 0, 0));
@@ -112,19 +114,22 @@ public class ValidationForms extends javax.swing.JFrame {
 
         getContentPane().add(pnl_left, java.awt.BorderLayout.LINE_START);
 
-        pnl_right.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_right.setBackground(new java.awt.Color(31, 41, 55));
 
+        jTabbedPane1.setBackground(new java.awt.Color(31, 41, 55));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        pnl_login.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_login.setBackground(new java.awt.Color(48, 63, 85));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(48, 63, 85));
 
-        pnl_loginusername.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_loginusername.setBackground(new java.awt.Color(48, 63, 85));
         pnl_loginusername.setPreferredSize(new java.awt.Dimension(280, 50));
 
-        lbl_loginusername.setBackground(new java.awt.Color(255, 255, 102));
+        lbl_loginusername.setBackground(new java.awt.Color(255, 255, 255));
         lbl_loginusername.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_loginusername.setForeground(new java.awt.Color(255, 255, 255));
         lbl_loginusername.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_loginusername.setText("Username");
         lbl_loginusername.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -164,11 +169,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel1.add(pnl_loginusername);
         pnl_loginusername.getAccessibleContext().setAccessibleName("pnl_loginusername");
 
-        pnl_loginpassword.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_loginpassword.setBackground(new java.awt.Color(48, 63, 85));
         pnl_loginpassword.setPreferredSize(new java.awt.Dimension(280, 50));
 
         lbl_loginpassword.setBackground(new java.awt.Color(255, 255, 102));
         lbl_loginpassword.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_loginpassword.setForeground(new java.awt.Color(255, 255, 255));
         lbl_loginpassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_loginpassword.setText("Password");
         lbl_loginpassword.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -207,7 +213,7 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel1.add(pnl_loginpassword);
         pnl_loginpassword.getAccessibleContext().setAccessibleName("pnl_loginpassword");
 
-        pnl_buttonlogin.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_buttonlogin.setBackground(new java.awt.Color(48, 63, 85));
         pnl_buttonlogin.setPreferredSize(new java.awt.Dimension(280, 50));
 
         btn_login.setText("Login");
@@ -256,17 +262,18 @@ public class ValidationForms extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Login", pnl_login);
 
-        pnl_signup.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_signup.setBackground(new java.awt.Color(48, 63, 85));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(48, 63, 85));
         jPanel5.setMinimumSize(new java.awt.Dimension(280, 29));
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
 
-        pnl_firstname.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_firstname.setBackground(new java.awt.Color(48, 63, 85));
         pnl_firstname.setPreferredSize(new java.awt.Dimension(280, 50));
 
-        lbl_firstname.setBackground(new java.awt.Color(255, 255, 102));
+        lbl_firstname.setBackground(new java.awt.Color(255, 255, 255));
         lbl_firstname.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_firstname.setForeground(new java.awt.Color(255, 255, 255));
         lbl_firstname.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_firstname.setText("First Name:");
         lbl_firstname.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -306,11 +313,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_firstname);
         pnl_firstname.getAccessibleContext().setAccessibleName("pnl_name");
 
-        pnl_lastname.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_lastname.setBackground(new java.awt.Color(48, 63, 85));
         pnl_lastname.setPreferredSize(new java.awt.Dimension(280, 50));
 
-        lbl_lastname.setBackground(new java.awt.Color(255, 255, 102));
+        lbl_lastname.setBackground(new java.awt.Color(255, 255, 255));
         lbl_lastname.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_lastname.setForeground(new java.awt.Color(255, 255, 255));
         lbl_lastname.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_lastname.setText("Last Name:");
         lbl_lastname.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -349,11 +357,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_lastname);
         pnl_lastname.getAccessibleContext().setAccessibleName("pnl_lastname");
 
-        pnl_bdayage.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_bdayage.setBackground(new java.awt.Color(48, 63, 85));
         pnl_bdayage.setPreferredSize(new java.awt.Dimension(280, 50));
 
         lbl_birthdate.setBackground(new java.awt.Color(255, 255, 102));
         lbl_birthdate.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_birthdate.setForeground(new java.awt.Color(255, 255, 255));
         lbl_birthdate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_birthdate.setText("Birthday: (MM-dd-YYYY)");
         lbl_birthdate.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -363,6 +372,7 @@ public class ValidationForms extends javax.swing.JFrame {
 
         lbl_age.setBackground(new java.awt.Color(255, 255, 102));
         lbl_age.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_age.setForeground(new java.awt.Color(255, 255, 255));
         lbl_age.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_age.setText("Age:");
         lbl_age.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -412,11 +422,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_bdayage);
         pnl_bdayage.getAccessibleContext().setAccessibleName("pnl_bdayage");
 
-        pnl_username.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_username.setBackground(new java.awt.Color(48, 63, 85));
         pnl_username.setPreferredSize(new java.awt.Dimension(280, 50));
 
         lbl_username.setBackground(new java.awt.Color(255, 255, 102));
         lbl_username.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_username.setForeground(new java.awt.Color(255, 255, 255));
         lbl_username.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_username.setText("Username:");
         lbl_username.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -455,11 +466,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_username);
         pnl_username.getAccessibleContext().setAccessibleName("pnl_username");
 
-        pnl_password.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_password.setBackground(new java.awt.Color(48, 63, 85));
         pnl_password.setPreferredSize(new java.awt.Dimension(280, 50));
 
         lbl_password.setBackground(new java.awt.Color(255, 255, 102));
         lbl_password.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_password.setForeground(new java.awt.Color(255, 255, 255));
         lbl_password.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_password.setText("Password:");
         lbl_password.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -498,11 +510,12 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_password);
         pnl_password.getAccessibleContext().setAccessibleName("pnl_password");
 
-        pnl_confirmpassword.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_confirmpassword.setBackground(new java.awt.Color(48, 63, 85));
         pnl_confirmpassword.setPreferredSize(new java.awt.Dimension(280, 50));
 
         lbl_confirmpassword.setBackground(new java.awt.Color(255, 255, 102));
         lbl_confirmpassword.setFont(new java.awt.Font("Lucida Fax", 1, 10)); // NOI18N
+        lbl_confirmpassword.setForeground(new java.awt.Color(255, 255, 255));
         lbl_confirmpassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_confirmpassword.setText("Confirm Password:");
         lbl_confirmpassword.setPreferredSize(new java.awt.Dimension(280, 15));
@@ -541,7 +554,7 @@ public class ValidationForms extends javax.swing.JFrame {
         jPanel5.add(pnl_confirmpassword);
         pnl_confirmpassword.getAccessibleContext().setAccessibleName("pnl_confirmpassword");
 
-        pnl_buttonsignup.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_buttonsignup.setBackground(new java.awt.Color(48, 63, 85));
         pnl_buttonsignup.setPreferredSize(new java.awt.Dimension(280, 50));
 
         btn_signup.setText("Sign Up");
@@ -592,13 +605,17 @@ public class ValidationForms extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Sign up", pnl_signup);
 
+        btn_closeBtn.setText("Close");
+
         javax.swing.GroupLayout pnl_rightLayout = new javax.swing.GroupLayout(pnl_right);
         pnl_right.setLayout(pnl_rightLayout);
         pnl_rightLayout.setHorizontalGroup(
             pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_rightLayout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnl_rightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_closeBtn)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
         pnl_rightLayout.setVerticalGroup(
@@ -606,8 +623,12 @@ public class ValidationForms extends javax.swing.JFrame {
             .addGroup(pnl_rightLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_closeBtn)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
+
+        btn_closeBtn.getAccessibleContext().setAccessibleName("btn_closeBtn");
 
         getContentPane().add(pnl_right, java.awt.BorderLayout.CENTER);
 
@@ -670,6 +691,7 @@ public class ValidationForms extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_closeBtn;
     private javax.swing.JButton btn_login;
     private javax.swing.JButton btn_signup;
     private javax.swing.JLabel jLabel1;
