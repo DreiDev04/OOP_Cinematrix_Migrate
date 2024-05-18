@@ -1047,6 +1047,9 @@
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="btn_closeBtn"/>
           </AccessibilityProperties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_closeBtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

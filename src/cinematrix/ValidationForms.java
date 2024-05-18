@@ -1,5 +1,8 @@
 package cinematrix;
-
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import backend.AuthManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -606,6 +609,11 @@ public class ValidationForms extends javax.swing.JFrame {
         jTabbedPane1.addTab("Sign up", pnl_signup);
 
         btn_closeBtn.setText("Close");
+        btn_closeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_closeBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_rightLayout = new javax.swing.GroupLayout(pnl_right);
         pnl_right.setLayout(pnl_rightLayout);
@@ -657,6 +665,11 @@ public class ValidationForms extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Sign Up Successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btn_signupActionPerformed
+
+    private void btn_closeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeBtnActionPerformed
+        JFrame frame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(btn_closeBtn);
+        frame.dispose();            
+    }//GEN-LAST:event_btn_closeBtnActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
