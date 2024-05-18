@@ -3,6 +3,7 @@ package cinematrix;
 import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
+import cinematrix.Panels.Features;
 import java.io.IOException;
 
 import java.security.KeyManagementException;
@@ -75,9 +76,8 @@ public class MainFrame extends javax.swing.JFrame {
         _currUser = currUser;
 
         
-        lbl_usernameDisplay.setText(_currUser.getUsername());
         //GET_PopularMovies();
-        apiClient.fetchPopularMovies();
+        fetchAndDisplayMovies();
         
 //        Discover_TV(tmdb.requestTV.get("getNetflixOrigPH"));
 //
@@ -87,8 +87,34 @@ public class MainFrame extends javax.swing.JFrame {
 //        main.add(new Features("Today"));
 
     }
+    private void fetchAndDisplayMovies() {
+        try {
+            // Fetch popular movies
+            String popularMoviesJson = apiClient.fetchPopularMovies();
+            displayMovies(popularMoviesJson, "Popular Movies");
 
-    private String TOKEN = tmdb.getTOKEN();
+            // Fetch top-rated movies
+            String topRatedMoviesJson = apiClient.fetchTopRatedMovies();
+            displayMovies(topRatedMoviesJson, "Top Rated Movies");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void displayMovies(String moviesJson, String title) throws IOException {
+        JSONObject jsonObject = new JSONObject(moviesJson);
+        JSONArray results = jsonObject.getJSONArray("results");
+
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject movie = results.getJSONObject(i);
+            String movieTitle = movie.getString("title");
+            String moviePoster = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
+            
+        }
+        main.add(new Features(results, title));
+
+    }
+
 
     public MainFrame() {
         initComponents();
@@ -109,7 +135,6 @@ public class MainFrame extends javax.swing.JFrame {
         lbl_movieTitle = new javax.swing.JLabel();
         lbl_bgImg = new javax.swing.JLabel();
         main = new javax.swing.JPanel();
-        lbl_usernameDisplay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -176,11 +201,6 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0);
         flowLayout1.setAlignOnBaseline(true);
         main.setLayout(flowLayout1);
-
-        lbl_usernameDisplay.setText("jLabel1");
-        main.add(lbl_usernameDisplay);
-        lbl_usernameDisplay.getAccessibleContext().setAccessibleName("lbl_usernameDisplay");
-
         pnl_body.add(main, java.awt.BorderLayout.CENTER);
 
         body.setViewportView(pnl_body);
@@ -234,7 +254,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_movieDescription;
     private javax.swing.JLabel lbl_movieRatings;
     private javax.swing.JLabel lbl_movieTitle;
-    private javax.swing.JLabel lbl_usernameDisplay;
     private javax.swing.JPanel main;
     private javax.swing.JPanel nav;
     private javax.swing.JPanel pnl_body;

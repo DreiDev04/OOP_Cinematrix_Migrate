@@ -233,16 +233,6 @@
                   <BorderConstraints direction="Center"/>
                 </Constraint>
               </Constraints>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="lbl_usernameDisplay">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel1"/>
-                  </Properties>
-                  <AccessibilityProperties>
-                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="lbl_usernameDisplay"/>
-                  </AccessibilityProperties>
-                </Component>
-              </SubComponents>
               <LayoutCode>
                 <CodeStatement>
                   <CodeExpression id="1_flowLayout1">
@@ -306,22 +296,6 @@
                   </StatementProvider>
                   <Parameters>
                     <CodeExpression id="1_flowLayout1"/>
-                  </Parameters>
-                </CodeStatement>
-                <CodeStatement>
-                  <CodeExpression id="6_main"/>
-                  <StatementProvider type="CodeMethod">
-                    <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-                  </StatementProvider>
-                  <Parameters>
-                    <CodeExpression id="7_lbl_usernameDisplay">
-                      <CodeVariable name="lbl_usernameDisplay" type="8194" declaredType="javax.swing.JLabel"/>
-                      <ExpressionOrigin>
-                        <ExpressionProvider type="ComponentRef">
-                          <ComponentRef name="lbl_usernameDisplay"/>
-                        </ExpressionProvider>
-                      </ExpressionOrigin>
-                    </CodeExpression>
                   </Parameters>
                 </CodeStatement>
               </LayoutCode>
