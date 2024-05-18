@@ -75,8 +75,8 @@ public class moviepanel extends JPanel {
         pnl_moviepanel.add(lbl_movieicon, JLayeredPane.DEFAULT_LAYER);
         lbl_movieicon.setBounds(0, 0, 170, 190); // Set bounds for IconLabel
 
-        JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 100, 5);
-        JLabel bookmarkLabel = createIconLabel(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 5); // Position bookmark icon beside heart icon
+        JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 115, 0);
+        JLabel bookmarkLabel = createIconLabel(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 0); // Position bookmark icon beside heart icon
 
         // Add heart and bookmark icon labels to layered pane
         pnl_moviepanel.add(heartLabel, JLayeredPane.PALETTE_LAYER);
