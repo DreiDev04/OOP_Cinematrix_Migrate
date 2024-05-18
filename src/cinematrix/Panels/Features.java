@@ -43,6 +43,7 @@ public class Features extends javax.swing.JPanel {
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
+                    System.out.println(e);
                 }
             }).start();
 
@@ -81,7 +82,7 @@ public class Features extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_featureTitle.setFont(new java.awt.Font("Cascadia Mono", 1, 24)); // NOI18N
-        lbl_featureTitle.setForeground(new java.awt.Color(229, 231, 235));
+        lbl_featureTitle.setForeground(new java.awt.Color(204, 204, 204));
         lbl_featureTitle.setText("<Feature Title>");
         add(lbl_featureTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
