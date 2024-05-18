@@ -2,6 +2,7 @@ package Splashscreen;
 
 import backend.Session;
 import cinematrix.MainFrame;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class LoadingSplash extends javax.swing.JFrame {
@@ -14,6 +15,7 @@ public class LoadingSplash extends javax.swing.JFrame {
         
         mf = new MainFrame(_session, this);
         mf.setVisible(false);
+        mf.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
         
         

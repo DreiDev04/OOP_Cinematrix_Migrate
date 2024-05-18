@@ -84,7 +84,7 @@ public class Features extends javax.swing.JPanel {
         lbl_featureTitle.setFont(new java.awt.Font("Cascadia Mono", 1, 24)); // NOI18N
         lbl_featureTitle.setForeground(new java.awt.Color(204, 204, 204));
         lbl_featureTitle.setText("<Feature Title>");
-        add(lbl_featureTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        add(lbl_featureTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
         jScrollPane1.setToolTipText("");
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -95,7 +95,7 @@ public class Features extends javax.swing.JPanel {
         pnl_carousel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         jScrollPane1.setViewportView(pnl_carousel);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1000, 280));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 950, 280));
     }// </editor-fold>//GEN-END:initComponents
 
 
