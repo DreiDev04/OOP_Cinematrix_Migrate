@@ -1,18 +1,22 @@
-
 package Splashscreen;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import backend.Session;
+import cinematrix.MainFrame;
 import javax.swing.SwingUtilities;
 
+public class LoadingSplash extends javax.swing.JFrame {
+    private Session _session;
+    private MainFrame mf;
 
-public class splashscreen extends javax.swing.JFrame {
-
-        private boolean setVisible;      
-        
-        public splashscreen() {
+    public LoadingSplash(Session session) {
         initComponents();
-       
+        this._session = session;
+        
+        mf = new MainFrame(_session, this);
+        mf.setVisible(false);
+        
+        
+        
     }
     // </editor-fold>
 
@@ -39,6 +43,7 @@ public class splashscreen extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         BackGroundPanel.setBackground(new java.awt.Color(0, 0, 0));
         BackGroundPanel.setForeground(new java.awt.Color(0, 0, 0));
@@ -79,50 +84,24 @@ public class splashscreen extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            splashscreen sp = new splashscreen();
-            sp.setVisible(true);
-            
 
-            // Create a new thread for the progress bar update to keep the UI responsive
-            new Thread(() -> {
-                try {
-                    for (int i = 0; i <= 100; i++) {
-                        Thread.sleep(100);
-                        final int progress = i;
-                        SwingUtilities.invokeLater(() -> {
-                            sp.LoadingValue.setText(progress + "%");
-                            sp.ProgressBar.setValue(progress);
-
-                            if (progress == 10) {
-                                sp.LoadingLabel.setText("Turning On Modules...");
-                            } else if (progress == 20) {
-                                sp.LoadingLabel.setText("Loading Modules...");
-                            } else if (progress == 50) {
-                                sp.LoadingLabel.setText("Connecting to Database...");
-                            } else if (progress == 70) {
-                                sp.LoadingLabel.setText("Connection Successful...");
-                            } else if (progress == 80) {
-                                sp.LoadingLabel.setText("Launching Application...");
-                            }
-                        });
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
-                }
-            }).start();
+    public void updateProgress(int progress, String message) {
+        SwingUtilities.invokeLater(() -> {
+            LoadingValue.setText(progress + "%");
+            ProgressBar.setValue(progress);
+            LoadingLabel.setText(message);
         });
+        
+        
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackGroundImage;
     private javax.swing.JPanel BackGroundPanel;
-    private javax.swing.JLabel LoadingLabel;
-    private javax.swing.JLabel LoadingValue;
+    public javax.swing.JLabel LoadingLabel;
+    public javax.swing.JLabel LoadingValue;
     private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JFrame jFrame1;
     // End of variables declaration//GEN-END:variables
