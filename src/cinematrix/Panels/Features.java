@@ -1,13 +1,26 @@
 
 package cinematrix.Panels;
 
+import java.awt.Color;
+import java.io.IOException;
+import javax.swing.JPanel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Features extends javax.swing.JPanel {
 
-    public Features(String title) {
+    public Features(JSONArray results, String title) throws IOException {
         initComponents();
         lbl_featureTitle.setText(title);
-        for (int i = 0; i < 10; i++) {
-            pnl_carousel.add(new MovieTemplatePanel());
+        
+        
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject movie = results.getJSONObject(i);
+            JPanel panel = new moviepanel(movie);
+            panel.setBackground(new Color(0x374151, false));
+            
+            pnl_carousel.add(panel);
+            
             
         }
     }
