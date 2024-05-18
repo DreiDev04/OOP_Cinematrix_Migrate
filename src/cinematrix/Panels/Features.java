@@ -7,12 +7,16 @@ import javax.swing.JPanel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import cinematrix.custom_ui.CustomScrollBarUI;
+
 public class Features extends javax.swing.JPanel {
 
     public Features(JSONArray results, String title) throws IOException {
         initComponents();
         lbl_featureTitle.setText(title);
         
+        jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
         
         for (int i = 0; i < results.length(); i++) {
             JSONObject movie = results.getJSONObject(i);
@@ -20,8 +24,6 @@ public class Features extends javax.swing.JPanel {
             panel.setBackground(new Color(0x374151, false));
             
             pnl_carousel.add(panel);
-            
-            
         }
     }
 
@@ -53,11 +55,9 @@ public class Features extends javax.swing.JPanel {
         pnl_carousel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         jScrollPane1.setViewportView(pnl_carousel);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1000, 260));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1000, 280));
     }// </editor-fold>//GEN-END:initComponents
-    public static void main(String[] args) {
-        
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
