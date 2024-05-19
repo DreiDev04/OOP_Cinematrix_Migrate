@@ -87,6 +87,22 @@ public class TmdbClient {
         }
     }
 
+    public String fetchCinemaPH() throws IOException {
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region=ph")
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            return response.body().string();
+        }
+    }
+
     public String fetchNetflix() throws IOException {
         Request request = new Request.Builder()
                 .url("https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=Ph&with_networks=213")
@@ -104,7 +120,7 @@ public class TmdbClient {
     }
 
     public String requestPoster(int movieId) throws IOException {
-        String url = "https://api.themoviedb.org/3/tv/" + movieId + "/images";
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "/images";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -121,14 +137,14 @@ public class TmdbClient {
 
             if (responseBody != null) {
                 JSONObject jsonResponse = new JSONObject(responseBody);
-                JSONArray results = jsonResponse.getJSONArray("backdrops");
+                JSONArray backdrops = jsonResponse.getJSONArray("backdrops");
                 JSONObject bestFitPoster = null;
 
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject bg = results.getJSONObject(i);
-                    if (bg.getDouble("aspect_ratio") >= 1) {
-                        if (bestFitPoster == null || isBetterFit(bg, bestFitPoster)) {
-                            bestFitPoster = bg;
+                for (int i = 0; i < backdrops.length(); i++) {
+                    JSONObject backdrop = backdrops.getJSONObject(i);
+                    if (backdrop.getDouble("aspect_ratio") >= 1) {
+                        if (bestFitPoster == null || isBetterFit(backdrop, bestFitPoster)) {
+                            bestFitPoster = backdrop;
                         }
                     }
                 }

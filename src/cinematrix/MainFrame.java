@@ -75,6 +75,8 @@ public class MainFrame extends javax.swing.JFrame {
         }
         _currUser = currUser;
 
+        lbl_username.setText("<html>" + _currUser.getUsername() + "</html>");
+
         fetchAndDisplayMovies();
 
     }
@@ -85,7 +87,7 @@ public class MainFrame extends javax.swing.JFrame {
             // Fetch popular movies
             String popularMoviesJson = apiClient.fetchPopularMovies();
             displayMovies(popularMoviesJson, "Popular Movies");
-
+            setMovie(popularMoviesJson);
             // Fetch top-rated movies
             String trendingDay = apiClient.fetchTrendingDay();
             displayMovies(trendingDay, "Trending Today");
@@ -98,11 +100,15 @@ public class MainFrame extends javax.swing.JFrame {
             String topRatedMoviesJson = apiClient.fetchTopRatedMovies();
             displayMovies(topRatedMoviesJson, "Top Rated Movies");
 
-            // Fetch Neflix Series
-            String netflixSeries = apiClient.fetchNetflix();
-            setMovie(netflixSeries);
-            displayMovies(netflixSeries, "Netflix Series");
+            // Fetch top-rated movies
+            String cinemaPH = apiClient.fetchCinemaPH();
+            displayMovies(cinemaPH, "Now Showing Movies");
 
+            // KULANG SA TIME SIR KAYA DI TATANGGALIN KO NA TONG NETFLIX
+            // Fetch Neflix Series
+//            String netflixSeries = apiClient.fetchNetflix();
+//            setMovie(netflixSeries);
+//            displayMovies(netflixSeries, "Netflix Series");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,17 +130,19 @@ public class MainFrame extends javax.swing.JFrame {
             int randomIndex = (int) (Math.random() * results.length());
             JSONObject randomMovie = results.getJSONObject(randomIndex);
 
-            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_name") + "<html>");
+            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_title") + "<html>");
             lbl_movieDescription.setText("<html>" + randomMovie.getString("overview") + "</html>");
             lbl_movieRatings.setText(randomMovie.get("vote_average").toString());
 
             int movieID = randomMovie.getInt("id");
             String posterPath = apiClient.requestPoster(movieID);
 
-            BufferedImage image = ImageIO.read(new URL(posterPath));
-
-            lbl_bgImg.setIcon(new ImageIcon(image));
-
+            if (posterPath != null) {
+                BufferedImage image = ImageIO.read(new URL(posterPath));
+                lbl_bgImg.setIcon(new ImageIcon(image));
+            } else {
+                // Handle case where posterPath is null
+            }
         }
     }
 
@@ -152,7 +160,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         asidePanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbl_username = new javax.swing.JLabel();
+        lbl_username1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         pnl_home = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -237,11 +246,17 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(250, 75));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("<Username>");
-        jLabel1.setName(""); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 30));
+        lbl_username.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
+        lbl_username.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_username.setText("Welcome!");
+        lbl_username.setName(""); // NOI18N
+        jPanel3.add(lbl_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 230, 40));
+
+        lbl_username1.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
+        lbl_username1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_username1.setText("Welcome!");
+        lbl_username1.setName(""); // NOI18N
+        jPanel3.add(lbl_username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 230, 40));
 
         asidePanel.add(jPanel3);
 
@@ -429,7 +444,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(75, 85, 99));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Interstellar");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(107, 114, 128)));
         jTextField1.setMaximumSize(new java.awt.Dimension(300, 30));
         jTextField1.setMinimumSize(new java.awt.Dimension(300, 30));
@@ -583,7 +597,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel asidePanel;
     private javax.swing.JButton btn_search;
     private javax.swing.JPanel hero;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -607,6 +620,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_movieDescription;
     private javax.swing.JLabel lbl_movieRatings;
     private javax.swing.JLabel lbl_movieTitle;
+    private javax.swing.JLabel lbl_username;
+    private javax.swing.JLabel lbl_username1;
     private javax.swing.JPanel main;
     private javax.swing.JPanel nav;
     private javax.swing.JPanel pnl_body;

@@ -83,7 +83,7 @@
         <Container class="javax.swing.JPanel" name="lbl_overviewPoster">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="37" green="29" red="1f" type="rgb"/>
+              <Color blue="30" green="2b" red="26" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
@@ -245,7 +245,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="20" y="200" width="570" height="150"/>
+                  <AbsoluteConstraints x="20" y="180" width="570" height="200"/>
                 </Constraint>
               </Constraints>
             </Component>

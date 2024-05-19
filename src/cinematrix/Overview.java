@@ -77,7 +77,7 @@ public class Overview extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        lbl_overviewPoster.setBackground(new java.awt.Color(31, 41, 55));
+        lbl_overviewPoster.setBackground(new java.awt.Color(38, 43, 48));
         lbl_overviewPoster.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_overviewTitle.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 24)); // NOI18N
@@ -128,7 +128,7 @@ public class Overview extends javax.swing.JFrame {
         lbl_overviewDescription.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
         lbl_overviewDescription.setForeground(new java.awt.Color(229, 231, 235));
         lbl_overviewDescription.setText("<html>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.</html>");
-        lbl_overviewPoster.add(lbl_overviewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 570, 150));
+        lbl_overviewPoster.add(lbl_overviewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 570, 200));
 
         jPanel1.add(lbl_overviewPoster, java.awt.BorderLayout.CENTER);
 
