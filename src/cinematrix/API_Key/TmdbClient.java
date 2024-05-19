@@ -10,15 +10,14 @@ import java.io.IOException;
 import cinematrix.API_Key.TMDB_api;
 import okhttp3.HttpUrl;
 
-
 public class TmdbClient {
 
     private final OkHttpClient client;
     TMDB_api api = new TMDB_api();
     String apiKey = api.getTOKEN();
 
-    
     private static final String API_URL = "https://api.themoviedb.org/3/search/movie";
+
     public TmdbClient() {
         this.client = new OkHttpClient();
     }
@@ -103,6 +102,7 @@ public class TmdbClient {
             return response.body().string();
         }
     }
+
     public String requestPoster(int movieId) throws IOException {
         String url = "https://api.themoviedb.org/3/tv/" + movieId + "/images";
 
@@ -142,12 +142,32 @@ public class TmdbClient {
     }
 
     // Method to request poster image for a given movie ID
-  public JSONObject querySearch(String query) throws IOException {
-        
+    public JSONObject querySearch(String query) throws IOException {
+
         HttpUrl.Builder urlBuilder = HttpUrl.parse(API_URL).newBuilder();
         urlBuilder.addQueryParameter("query", query);
 
         String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            String responseBody = response.body().string();
+            return new JSONObject(responseBody);
+        }
+    }
+
+    public JSONObject searchID(int movieId) throws IOException {
+
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "?language=en-US";
 
         Request request = new Request.Builder()
                 .url(url)

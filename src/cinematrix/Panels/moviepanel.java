@@ -1,5 +1,6 @@
 package cinematrix.Panels;
 
+import cinematrix.Overview;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -26,8 +29,11 @@ public class moviepanel extends JPanel {
     private String movieTile;
     private String ratings;
     private ImageIcon resizedIcon;
+    JLabel lbl_movieicon = new JLabel();
+    private JSONObject _movie;
 
     public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
+        _movie = movie;
         try {
             if (movie.has("title")) {
                 movieTile = movie.getString("title");
@@ -46,7 +52,7 @@ public class moviepanel extends JPanel {
             }
 
             String posterPathURL = "";
-            if (movie.has("poster_path")) {
+            if (movie.has("poster_path") && !movie.isNull("poster_path")) {
                 posterPathURL = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
                 URL posterUrl = new URL(posterPathURL);
                 BufferedImage originalImage = ImageIO.read(posterUrl);
@@ -56,13 +62,23 @@ public class moviepanel extends JPanel {
                 resizedIcon = new ImageIcon(resizedImage);
             } else {
                 // Use default placeholder image
-                ImageIcon originalImage = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\images\\placeholder\\default_poster.jpg");
-                int desiredWidth = 170;
-                int desiredHeight = 200;
-                Image resizedImage = originalImage.getImage().getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-                resizedIcon = new ImageIcon(resizedImage);
+                lbl_movieicon.setText("No Poster");
+                lbl_movieicon.setForeground(Color.white);
+                lbl_movieicon.setFont(new Font("Cascadia Code", Font.BOLD, 14));
+                
             }
-
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    try {
+                        new Overview(_movie.getInt("id")).setVisible(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(moviepanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            
+            
             ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
             ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
             ImageIcon bookmarkIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\3.png");
@@ -85,7 +101,7 @@ public class moviepanel extends JPanel {
             lbl_rating.setForeground(new Color(0xE5E7EB));
 
             // MOVIE PANEL ICON
-            JLabel lbl_movieicon = new JLabel();
+            
             lbl_movieicon.setIcon(resizedIcon);
 
             // Create a layered pane to stack components

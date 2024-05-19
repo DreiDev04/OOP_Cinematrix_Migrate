@@ -19,20 +19,12 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.ImageIcon;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
-import java.util.Random;
-import javax.swing.Icon;
 import javax.swing.JPanel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -458,6 +450,11 @@ public class MainFrame extends javax.swing.JFrame {
                 btn_searchMouseClicked(evt);
             }
         });
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
         jPanel8.add(btn_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, 40));
 
         jPanel10.add(jPanel8, java.awt.BorderLayout.PAGE_START);
@@ -525,7 +522,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_homeMouseClicked
 
     private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseClicked
-
+        pnl_searchResult.removeAll();
         String query = jTextField1.getText().toString();
         try {
             JSONObject searchResult = apiClient.querySearch(query);
@@ -545,6 +542,10 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_searchMouseClicked
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_searchActionPerformed
 
     public static void main(String args[]) {
 

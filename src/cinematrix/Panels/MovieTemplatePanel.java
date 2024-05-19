@@ -75,7 +75,8 @@ public class MovieTemplatePanel extends javax.swing.JPanel {
         lbl_heartBtn.setPreferredSize(new java.awt.Dimension(32, 32));
         pnl_poster.add(lbl_heartBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 30, -1));
 
-        lbl_moviePoster.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/placeholders/170x190.png"))); // NOI18N
+        lbl_moviePoster.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lbl_moviePoster.setText("No Poster Found");
         pnl_poster.add(lbl_moviePoster, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 190));
 
         add(pnl_poster, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
