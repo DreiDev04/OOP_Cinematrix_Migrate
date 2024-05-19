@@ -1,15 +1,33 @@
 
 package cinematrix.Panels;
 
+import backend.Database;
+import backend.FavoritesTemplate;
+import backend.Session;
+import cinematrix.Overview;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import org.json.JSONArray;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.UUID;
 
 
 public class MovieTemplatePanel extends javax.swing.JPanel {
@@ -42,8 +60,6 @@ public class MovieTemplatePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         pnl_poster = new javax.swing.JPanel();
-        lbl_bookmarkBtn = new javax.swing.JLabel();
-        lbl_heartBtn = new javax.swing.JLabel();
         lbl_moviePoster = new javax.swing.JLabel();
         pnl_title = new javax.swing.JPanel();
         lbl_movieRating = new javax.swing.JLabel();
@@ -61,19 +77,6 @@ public class MovieTemplatePanel extends javax.swing.JPanel {
         pnl_poster.setMinimumSize(new java.awt.Dimension(170, 190));
         pnl_poster.setPreferredSize(new java.awt.Dimension(170, 190));
         pnl_poster.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_bookmarkBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbl_bookmarkBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/bookmark.png"))); // NOI18N
-        lbl_bookmarkBtn.setMaximumSize(new java.awt.Dimension(32, 32));
-        lbl_bookmarkBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        lbl_bookmarkBtn.setPreferredSize(new java.awt.Dimension(32, 32));
-        pnl_poster.add(lbl_bookmarkBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 30, -1));
-
-        lbl_heartBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/heart.png"))); // NOI18N
-        lbl_heartBtn.setMaximumSize(new java.awt.Dimension(32, 32));
-        lbl_heartBtn.setMinimumSize(new java.awt.Dimension(32, 32));
-        lbl_heartBtn.setPreferredSize(new java.awt.Dimension(32, 32));
-        pnl_poster.add(lbl_heartBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 30, -1));
 
         lbl_moviePoster.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
         lbl_moviePoster.setText("No Poster Found");
@@ -103,8 +106,6 @@ public class MovieTemplatePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lbl_bookmarkBtn;
-    private javax.swing.JLabel lbl_heartBtn;
     private javax.swing.JLabel lbl_moviePoster;
     private javax.swing.JLabel lbl_movieRating;
     private javax.swing.JLabel lbl_movieTitle;

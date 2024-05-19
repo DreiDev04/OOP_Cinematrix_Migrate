@@ -118,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
         JSONObject jsonObject = new JSONObject(moviesJson);
         JSONArray results = jsonObject.getJSONArray("results");
 
-        main.add(new Features(results, title, loadingSplash, this));
+        main.add(new Features(results, title, loadingSplash, this, _currUser));
 
     }
 
@@ -189,9 +189,9 @@ public class MainFrame extends javax.swing.JFrame {
         btn_search = new javax.swing.JButton();
         pnl_searchResult = new javax.swing.JPanel();
         jcp_fav = new javax.swing.JScrollPane();
-        jPanel5 = new javax.swing.JPanel();
+        favoritesFlowPanel = new javax.swing.JPanel();
         jcp_bookmark = new javax.swing.JScrollPane();
-        jPanel6 = new javax.swing.JPanel();
+        bookmarkedFlowPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -484,13 +484,13 @@ public class MainFrame extends javax.swing.JFrame {
         MainLayeredPane.setLayer(jcp_search, javax.swing.JLayeredPane.PALETTE_LAYER);
         MainLayeredPane.add(jcp_search, "card3");
 
-        jPanel5.setBackground(new java.awt.Color(51, 0, 51));
-        jcp_fav.setViewportView(jPanel5);
+        favoritesFlowPanel.setBackground(new java.awt.Color(31, 41, 55));
+        jcp_fav.setViewportView(favoritesFlowPanel);
 
         MainLayeredPane.add(jcp_fav, "card4");
 
-        jPanel6.setBackground(new java.awt.Color(102, 51, 0));
-        jcp_bookmark.setViewportView(jPanel6);
+        bookmarkedFlowPanel.setBackground(new java.awt.Color(31, 41, 55));
+        jcp_bookmark.setViewportView(bookmarkedFlowPanel);
 
         MainLayeredPane.add(jcp_bookmark, "card5");
 
@@ -544,7 +544,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             for (int i = 0; i < results.length(); i++) {
                 JSONObject movie = results.getJSONObject(i);
-                JPanel panel = new moviepanel(movie);
+                JPanel panel = new moviepanel(movie, _currUser);
                 panel.setBackground(new Color(0x374151, false));
                 pnl_searchResult.add(panel);
             }
@@ -595,7 +595,9 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane MainLayeredPane;
     private javax.swing.JPanel asidePanel;
+    private javax.swing.JPanel bookmarkedFlowPanel;
     private javax.swing.JButton btn_search;
+    private javax.swing.JPanel favoritesFlowPanel;
     private javax.swing.JPanel hero;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -607,8 +609,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane jcp_bookmark;

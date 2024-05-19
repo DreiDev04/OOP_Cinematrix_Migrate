@@ -1,5 +1,8 @@
 package cinematrix.Panels;
 
+import backend.Database;
+import backend.FavoritesTemplate;
+import backend.Session;
 import cinematrix.Overview;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,6 +26,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.UUID;
 
 public class moviepanel extends JPanel {
 
@@ -31,9 +35,14 @@ public class moviepanel extends JPanel {
     private ImageIcon resizedIcon;
     JLabel lbl_movieicon = new JLabel();
     private JSONObject _movie;
+    private Session _currUser;
+    private String thisMovieID;
 
-    public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
+    public moviepanel(JSONObject movie, Session currUser) throws MalformedURLException, IOException {
         _movie = movie;
+        _currUser = currUser;
+
+        thisMovieID = generateUID();
         try {
             if (movie.has("title")) {
                 movieTile = movie.getString("title");
@@ -65,20 +74,19 @@ public class moviepanel extends JPanel {
                 lbl_movieicon.setText("No Poster");
                 lbl_movieicon.setForeground(Color.white);
                 lbl_movieicon.setFont(new Font("Cascadia Code", Font.BOLD, 14));
-                
+
             }
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     try {
-                        new Overview(_movie.getInt("id")).setVisible(true);
+                        new Overview(_movie.getInt("id"), _currUser, thisMovieID).setVisible(true);
                     } catch (IOException ex) {
                         Logger.getLogger(moviepanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
-            
-            
+
             ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
             ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
             ImageIcon bookmarkIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\3.png");
@@ -101,7 +109,6 @@ public class moviepanel extends JPanel {
             lbl_rating.setForeground(new Color(0xE5E7EB));
 
             // MOVIE PANEL ICON
-            
             lbl_movieicon.setIcon(resizedIcon);
 
             // Create a layered pane to stack components
@@ -112,13 +119,12 @@ public class moviepanel extends JPanel {
             pnl_moviepanel.add(lbl_movieicon, JLayeredPane.DEFAULT_LAYER);
             lbl_movieicon.setBounds(0, 0, 170, 190); // Set bounds for IconLabel
 
-            JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 115, 0);
-            JLabel bookmarkLabel = createIconLabel(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 0); // Position bookmark icon beside heart icon
-
-            // Add heart and bookmark icon labels to layered pane
-            pnl_moviepanel.add(heartLabel, JLayeredPane.PALETTE_LAYER);
-            pnl_moviepanel.add(bookmarkLabel, JLayeredPane.PALETTE_LAYER);
-
+//            JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 115, 0);
+//            JLabel bookmarkLabel = createIconLabel1(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 0); // Position bookmark icon beside heart icon
+//
+//            // Add heart and bookmark icon labels to layered pane
+//            pnl_moviepanel.add(heartLabel, JLayeredPane.PALETTE_LAYER);
+//            pnl_moviepanel.add(bookmarkLabel, JLayeredPane.PALETTE_LAYER);
             // MOVIE TITLE PANEL
             JPanel pnl_titlepanel = new JPanel();
             pnl_titlepanel.setBackground(new Color(0x374151, false));
@@ -148,13 +154,32 @@ public class moviepanel extends JPanel {
         }
     }
 
-    private static JLabel createIconLabel(ImageIcon icon1, ImageIcon icon2, int x, int y) {
+    private JLabel createIconLabel(ImageIcon icon1, ImageIcon icon2, int x, int y) {
         JLabel iconLabel = new JLabel(icon1);
         iconLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (iconLabel.getIcon() == icon1) {
                     iconLabel.setIcon(icon2);
+
+                } else {
+                    iconLabel.setIcon(icon1);
+
+                }
+            }
+        });
+        iconLabel.setBounds(x, y, 30, 30); // Position icon label
+        return iconLabel;
+    }
+
+    private JLabel createIconLabel1(ImageIcon icon1, ImageIcon icon2, int x, int y) {
+        JLabel iconLabel = new JLabel(icon1);
+        iconLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (iconLabel.getIcon() == icon1) {
+                    iconLabel.setIcon(icon2);
+
                 } else {
                     iconLabel.setIcon(icon1);
                 }
@@ -164,21 +189,8 @@ public class moviepanel extends JPanel {
         return iconLabel;
     }
 
-    public static void main(String args[]) {
-        try {
-            JSONObject movie = new JSONObject(); // Example JSON object
-            moviepanel moviePanel = new moviepanel(movie);
-
-            JFrame frame = new JFrame();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(170, 240);
-            frame.setVisible(true);
-
-            frame.setLayout(new BorderLayout()); // Set frame layout to BorderLayout
-
-            frame.add(moviePanel, BorderLayout.CENTER);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static String generateUID() {
+        UUID uid = UUID.randomUUID();
+        return uid.toString();
     }
 }

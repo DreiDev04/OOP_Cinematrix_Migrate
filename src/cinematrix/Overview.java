@@ -1,5 +1,9 @@
 package cinematrix;
 
+import backend.BookmarkTemplate;
+import backend.Database;
+import backend.FavoritesTemplate;
+import backend.Session;
 import org.json.JSONObject;
 import cinematrix.API_Key.TmdbClient;
 import java.awt.Color;
@@ -8,14 +12,24 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Overview extends javax.swing.JFrame {
 
     TmdbClient apiClient = new TmdbClient();
+    private Database db = new Database();
+    private Session _currUser;
+    private String thisMovieID;
+    private String _movieID;
 
-    public Overview(int movieID) throws IOException {
+    public Overview(int movieID, Session currUser, String localUID) throws IOException {
+        _currUser = currUser;
+        thisMovieID = localUID;
+        _movieID = String.valueOf(movieID);
+
         initComponents();
         System.out.println(movieID);
         JSONObject response = apiClient.searchID(movieID);
@@ -52,16 +66,14 @@ public class Overview extends javax.swing.JFrame {
         lbl_overviewReleaseDate = new javax.swing.JLabel();
         lbl_overviewTime = new javax.swing.JLabel();
         lbl_overviewRating = new javax.swing.JLabel();
-        lbl_overviewHeartBtn = new javax.swing.JLabel();
-        lbl_overviewSaveBtn = new javax.swing.JLabel();
-        lbl_overviewShareBtn = new javax.swing.JLabel();
         btn_overviewExitBtn = new javax.swing.JButton();
         lbl_overviewDescription = new javax.swing.JLabel();
+        btn_removeFav = new javax.swing.JButton();
+        btn_fav = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(600, 700));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(600, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 51));
@@ -101,34 +113,44 @@ public class Overview extends javax.swing.JFrame {
         lbl_overviewRating.setFont(new java.awt.Font("Cascadia Code", 1, 14)); // NOI18N
         lbl_overviewRating.setForeground(new java.awt.Color(229, 231, 235));
         lbl_overviewRating.setText("Rating: ");
-        lbl_overviewPoster.add(lbl_overviewRating, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 550, -1));
+        lbl_overviewPoster.add(lbl_overviewRating, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, -1));
         lbl_overviewRating.getAccessibleContext().setAccessibleName("lbl_overviewTime");
 
-        lbl_overviewHeartBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/heart.png"))); // NOI18N
-        lbl_overviewPoster.add(lbl_overviewHeartBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-        lbl_overviewHeartBtn.getAccessibleContext().setAccessibleName("lbl_overviewHeartBtn");
-
-        lbl_overviewSaveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/bookmark.png"))); // NOI18N
-        lbl_overviewPoster.add(lbl_overviewSaveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
-        lbl_overviewSaveBtn.getAccessibleContext().setAccessibleName("lbl_overviewSaveBtn");
-
-        lbl_overviewShareBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/shared.png"))); // NOI18N
-        lbl_overviewPoster.add(lbl_overviewShareBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
-        lbl_overviewShareBtn.getAccessibleContext().setAccessibleName("lbl_overviewShareBtn");
-
         btn_overviewExitBtn.setText("Close");
+        btn_overviewExitBtn.setBorder(null);
         btn_overviewExitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_overviewExitBtnActionPerformed(evt);
             }
         });
-        lbl_overviewPoster.add(btn_overviewExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, -1, -1));
+        lbl_overviewPoster.add(btn_overviewExitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, 60, 30));
         btn_overviewExitBtn.getAccessibleContext().setAccessibleName("btn_overviewExitBtn");
 
         lbl_overviewDescription.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
         lbl_overviewDescription.setForeground(new java.awt.Color(229, 231, 235));
         lbl_overviewDescription.setText("<html>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.</html>");
+        lbl_overviewDescription.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lbl_overviewPoster.add(lbl_overviewDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 570, 200));
+
+        btn_removeFav.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
+        btn_removeFav.setText("Remove");
+        btn_removeFav.setBorder(null);
+        btn_removeFav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_removeFavMouseClicked(evt);
+            }
+        });
+        lbl_overviewPoster.add(btn_removeFav, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 110, 30));
+
+        btn_fav.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
+        btn_fav.setText("Add to Favorites");
+        btn_fav.setBorder(null);
+        btn_fav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_favMouseClicked(evt);
+            }
+        });
+        lbl_overviewPoster.add(btn_fav, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 150, 30));
 
         jPanel1.add(lbl_overviewPoster, java.awt.BorderLayout.CENTER);
 
@@ -141,6 +163,24 @@ public class Overview extends javax.swing.JFrame {
     private void btn_overviewExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_overviewExitBtnActionPerformed
         this.dispose();
     }//GEN-LAST:event_btn_overviewExitBtnActionPerformed
+
+    private void btn_favMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_favMouseClicked
+        if (!db.isMovieAlreadyInFavorites(_currUser.getUserUID(), _movieID)) {
+            db.addFavorites(new FavoritesTemplate(_currUser.getUserUID(), thisMovieID, _movieID));
+            JOptionPane.showMessageDialog(null, "Movie added to favorites.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Movie already exists in favorites.");
+        }
+    }//GEN-LAST:event_btn_favMouseClicked
+
+    private void btn_removeFavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removeFavMouseClicked
+        if (db.isMovieAlreadyInFavorites(_currUser.getUserUID(), _movieID)) {
+            db.removeFavorites(_currUser.getUserUID(), _movieID);
+            JOptionPane.showMessageDialog(null, "Movie removed from favorites.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Movie not found in favorites.");
+        }
+    }//GEN-LAST:event_btn_removeFavMouseClicked
 
     public static void main(String args[]) {
 
@@ -169,18 +209,18 @@ public class Overview extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_fav;
     private javax.swing.JButton btn_overviewExitBtn;
+    private javax.swing.JButton btn_removeFav;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbl_overvierPoster;
     private javax.swing.JLabel lbl_overviewDescription;
-    private javax.swing.JLabel lbl_overviewHeartBtn;
     private javax.swing.JPanel lbl_overviewPoster;
     private javax.swing.JLabel lbl_overviewRating;
     private javax.swing.JLabel lbl_overviewReleaseDate;
-    private javax.swing.JLabel lbl_overviewSaveBtn;
-    private javax.swing.JLabel lbl_overviewShareBtn;
     private javax.swing.JLabel lbl_overviewTime;
     private javax.swing.JLabel lbl_overviewTitle;
     // End of variables declaration//GEN-END:variables
+
 }

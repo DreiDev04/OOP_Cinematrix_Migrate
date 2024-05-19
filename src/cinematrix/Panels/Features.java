@@ -1,6 +1,7 @@
 package cinematrix.Panels;
 
 import Splashscreen.LoadingSplash;
+import backend.Session;
 import cinematrix.MainFrame;
 import java.awt.Color;
 import java.io.IOException;
@@ -15,11 +16,13 @@ public class Features extends javax.swing.JPanel {
 
     LoadingSplash loadingSplash;
     MainFrame mainFrame;
+    Session _currUser;
 
-    public Features(JSONArray results, String title, LoadingSplash ls, MainFrame mf) throws IOException {
+    public Features(JSONArray results, String title, LoadingSplash ls, MainFrame mf, Session currUser) throws IOException {
         initComponents();
         loadingSplash = ls;
         mainFrame = mf;
+        this._currUser = currUser;
         lbl_featureTitle.setText(title);
 
         jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBarUI());
@@ -30,7 +33,7 @@ public class Features extends javax.swing.JPanel {
                     int totalItems = results.length();
                     for (int i = 0; i < totalItems; i++) {
                         JSONObject movie = results.getJSONObject(i);
-                        JPanel panel = new moviepanel(movie);
+                        JPanel panel = new moviepanel(movie, _currUser);
                         panel.setBackground(new Color(0x374151, false));
                         pnl_carousel.add(panel);
 
