@@ -8,13 +8,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import cinematrix.API_Key.TMDB_api;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import okhttp3.HttpUrl;
+
 
 public class TmdbClient {
 
@@ -22,6 +17,8 @@ public class TmdbClient {
     TMDB_api api = new TMDB_api();
     String apiKey = api.getTOKEN();
 
+    
+    private static final String API_URL = "https://api.themoviedb.org/3/search/movie";
     public TmdbClient() {
         this.client = new OkHttpClient();
     }
@@ -106,8 +103,6 @@ public class TmdbClient {
             return response.body().string();
         }
     }
-
-    // Method to request poster image for a given movie ID
     public String requestPoster(int movieId) throws IOException {
         String url = "https://api.themoviedb.org/3/tv/" + movieId + "/images";
 
@@ -144,6 +139,30 @@ public class TmdbClient {
             }
         }
         return null;
+    }
+
+    // Method to request poster image for a given movie ID
+  public JSONObject querySearch(String query) throws IOException {
+        
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(API_URL).newBuilder();
+        urlBuilder.addQueryParameter("query", query);
+
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+            String responseBody = response.body().string();
+            return new JSONObject(responseBody);
+        }
     }
 
     private boolean isBetterFit(JSONObject newPoster, JSONObject currentBest) {

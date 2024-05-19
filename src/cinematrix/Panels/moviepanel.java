@@ -28,80 +28,108 @@ public class moviepanel extends JPanel {
     private ImageIcon resizedIcon;
 
     public moviepanel(JSONObject movie) throws MalformedURLException, IOException {
-        
         try {
-            movieTile = movie.getString("title");
+            if (movie.has("title")) {
+                movieTile = movie.getString("title");
+            } else if (movie.has("original_title")) {
+                movieTile = movie.getString("original_title");
+            } else if (movie.has("original_name")) {
+                movieTile = movie.getString("original_name");
+            } else {
+                // Handle the case where none of the keys exist (possibly throw an exception or set a default title)
+            }
+
+            if (movie.has("vote_average")) {
+                ratings = "ratings: " + movie.getDouble("vote_average");
+            } else {
+                ratings = "ratings: N/A"; // Fallback if vote_average doesn't exist
+            }
+
+            String posterPathURL = "";
+            if (movie.has("poster_path")) {
+                posterPathURL = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
+                URL posterUrl = new URL(posterPathURL);
+                BufferedImage originalImage = ImageIO.read(posterUrl);
+                int desiredWidth = 170;
+                int desiredHeight = 200;
+                Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+                resizedIcon = new ImageIcon(resizedImage);
+            } else {
+                // Use default placeholder image
+                ImageIcon originalImage = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\images\\placeholder\\default_poster.jpg");
+                int desiredWidth = 170;
+                int desiredHeight = 200;
+                Image resizedImage = originalImage.getImage().getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+                resizedIcon = new ImageIcon(resizedImage);
+            }
+
+            ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
+            ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
+            ImageIcon bookmarkIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\3.png");
+            ImageIcon bookmarkIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\4.png");
+
+            // MOVIE LABEL
+            JLabel lbl_movietitle = new JLabel();
+            lbl_movietitle.setText(movieTile);
+            lbl_movietitle.setVerticalAlignment(JLabel.TOP);
+            lbl_movietitle.setHorizontalAlignment(JLabel.LEFT);
+            lbl_movietitle.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+            lbl_movietitle.setForeground(new Color(0xE5E7EB));
+
+            // RATING LABEL
+            JLabel lbl_rating = new JLabel();
+            lbl_rating.setText(ratings);
+            lbl_rating.setVerticalAlignment(JLabel.BOTTOM);
+            lbl_rating.setHorizontalAlignment(JLabel.LEFT);
+            lbl_rating.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
+            lbl_rating.setForeground(new Color(0xE5E7EB));
+
+            // MOVIE PANEL ICON
+            JLabel lbl_movieicon = new JLabel();
+            lbl_movieicon.setIcon(resizedIcon);
+
+            // Create a layered pane to stack components
+            JLayeredPane pnl_moviepanel = new JLayeredPane();
+            pnl_moviepanel.setPreferredSize(new Dimension(170, 240));
+
+            // Add movie icon and heart icon to layered pane
+            pnl_moviepanel.add(lbl_movieicon, JLayeredPane.DEFAULT_LAYER);
+            lbl_movieicon.setBounds(0, 0, 170, 190); // Set bounds for IconLabel
+
+            JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 115, 0);
+            JLabel bookmarkLabel = createIconLabel(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 0); // Position bookmark icon beside heart icon
+
+            // Add heart and bookmark icon labels to layered pane
+            pnl_moviepanel.add(heartLabel, JLayeredPane.PALETTE_LAYER);
+            pnl_moviepanel.add(bookmarkLabel, JLayeredPane.PALETTE_LAYER);
+
+            // MOVIE TITLE PANEL
+            JPanel pnl_titlepanel = new JPanel();
+            pnl_titlepanel.setBackground(new Color(0x374151, false));
+            pnl_titlepanel.setLayout(new BorderLayout());
+            pnl_titlepanel.setPreferredSize(new Dimension(170, 40)); // Set preferred size for titlePanel
+            pnl_titlepanel.add(lbl_movietitle, BorderLayout.NORTH);
+            pnl_titlepanel.add(lbl_rating, BorderLayout.SOUTH);
+
+            //MainPanel
+            JPanel pnl_mainpanel = new JPanel(new BorderLayout());
+            pnl_mainpanel.setBackground(new Color(0x374151, false));
+            pnl_mainpanel.setPreferredSize(new Dimension(170, 230));
+            pnl_mainpanel.add(pnl_moviepanel, BorderLayout.CENTER);
+            pnl_mainpanel.add(pnl_titlepanel, BorderLayout.SOUTH);
+
+            // Add main panel to this panel
+            add(pnl_mainpanel);
         } catch (JSONException e) {
-            movieTile = movie.getString("original_name");
+            e.printStackTrace();
+            // Handle any JSON parsing exceptions
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // Handle URL-related exceptions
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle IO-related exceptions
         }
-        
-        ratings = "ratings: " + movie.getDouble("vote_average");
-        String posterPathURL = "https://image.tmdb.org/t/p/w500" + movie.getString("poster_path");
-
-        URL posterUrl = new URL(posterPathURL);
-        BufferedImage originalImage = ImageIO.read(posterUrl);
-        int desiredWidth = 170;
-        int desiredHeight = 200;
-        Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-        resizedIcon = new ImageIcon(resizedImage);
-
-        ImageIcon heartIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\1.png");
-        ImageIcon heartIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\2.png");
-        ImageIcon bookmarkIcon1 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\3.png");
-        ImageIcon bookmarkIcon2 = new ImageIcon(System.getProperty("user.dir") + File.separator + "src" + "\\moviepanel Icon\\4.png");
-
-        // MOVIE LABEL
-        JLabel lbl_movietitle = new JLabel();
-        lbl_movietitle.setText(movieTile);
-        lbl_movietitle.setVerticalAlignment(JLabel.TOP);
-        lbl_movietitle.setHorizontalAlignment(JLabel.LEFT);
-        lbl_movietitle.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-        lbl_movietitle.setForeground(new Color(0xE5E7EB));
-
-        // RATING LABEL
-        JLabel lbl_rating = new JLabel();
-        lbl_rating.setText(ratings);
-        lbl_rating.setVerticalAlignment(JLabel.BOTTOM);
-        lbl_rating.setHorizontalAlignment(JLabel.LEFT);
-        lbl_rating.setFont(new Font("Cascadia Code", Font.PLAIN, 12));
-        lbl_rating.setForeground(new Color(0xE5E7EB));
-
-        // MOVIE PANEL ICON
-        JLabel lbl_movieicon = new JLabel();
-        lbl_movieicon.setIcon(resizedIcon);
-
-        // Create a layered pane to stack components
-        JLayeredPane pnl_moviepanel = new JLayeredPane();
-        pnl_moviepanel.setPreferredSize(new Dimension(170, 240));
-
-        // Add movie icon and heart icon to layered pane
-        pnl_moviepanel.add(lbl_movieicon, JLayeredPane.DEFAULT_LAYER);
-        lbl_movieicon.setBounds(0, 0, 170, 190); // Set bounds for IconLabel
-
-        JLabel heartLabel = createIconLabel(heartIcon1, heartIcon2, 115, 0);
-        JLabel bookmarkLabel = createIconLabel(bookmarkIcon1, bookmarkIcon2, 90 + heartIcon1.getIconWidth() + 10, 0); // Position bookmark icon beside heart icon
-
-        // Add heart and bookmark icon labels to layered pane
-        pnl_moviepanel.add(heartLabel, JLayeredPane.PALETTE_LAYER);
-        pnl_moviepanel.add(bookmarkLabel, JLayeredPane.PALETTE_LAYER);
-
-        // MOVIE TITLE PANEL
-        JPanel pnl_titlepanel = new JPanel();
-        pnl_titlepanel.setBackground(new Color(0x374151, false));
-        pnl_titlepanel.setLayout(new BorderLayout());
-        pnl_titlepanel.setPreferredSize(new Dimension(170, 40)); // Set preferred size for titlePanel
-        pnl_titlepanel.add(lbl_movietitle, BorderLayout.NORTH);
-        pnl_titlepanel.add(lbl_rating, BorderLayout.SOUTH);
-
-        //MainPanel
-        JPanel pnl_mainpanel = new JPanel(new BorderLayout());
-        pnl_mainpanel.setBackground(new Color(0x374151, false));
-        pnl_mainpanel.setPreferredSize(new Dimension(170, 230));
-        pnl_mainpanel.add(pnl_moviepanel, BorderLayout.CENTER);
-        pnl_mainpanel.add(pnl_titlepanel, BorderLayout.SOUTH);
-
-        // Add main panel to this panel
-        add(pnl_mainpanel);
     }
 
     private static JLabel createIconLabel(ImageIcon icon1, ImageIcon icon2, int x, int y) {
