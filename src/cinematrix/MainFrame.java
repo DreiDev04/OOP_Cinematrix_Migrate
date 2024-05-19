@@ -1,6 +1,7 @@
 package cinematrix;
 
 import Splashscreen.LoadingSplash;
+import backend.FavoritesTemplate;
 import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
@@ -24,8 +25,13 @@ import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import backend.Database;
+import java.awt.event.ActionEvent;
+import java.util.TimerTask;
+import javax.swing.Timer;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -63,7 +69,9 @@ public class MainFrame extends javax.swing.JFrame {
     TMDB_api tmdb = new TMDB_api();
     Session _currUser = new Session();
     TmdbClient apiClient = new TmdbClient();
+    Database db = new Database();
     LoadingSplash loadingSplash;
+    private Timer fetchTimer;
 
     public MainFrame(Session currUser, LoadingSplash ls) {
         initComponents();
@@ -79,6 +87,24 @@ public class MainFrame extends javax.swing.JFrame {
 
         fetchAndDisplayMovies();
 
+    }
+
+    public void fetchFavorites() throws IOException {
+        favoritesFlowPanel.removeAll();
+
+        List<FavoritesTemplate> favoritesList = db.getFavorites();
+
+        for (FavoritesTemplate favorite : favoritesList) {
+            if (_currUser.getUserUID().equals(favorite.getUID())) {
+                int movieID = Integer.parseInt(favorite.getMovieID());
+
+                favoritesFlowPanel.add(new moviepanel(movieID, _currUser));
+            }
+
+        }
+
+        favoritesFlowPanel.revalidate();
+        favoritesFlowPanel.repaint();
     }
 
     private void fetchAndDisplayMovies() {
@@ -169,8 +195,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pnl_fav = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        pnl_book = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         MainLayeredPane = new javax.swing.JLayeredPane();
         jcp_main = new javax.swing.JScrollPane();
         pnl_body = new javax.swing.JPanel();
@@ -190,8 +214,6 @@ public class MainFrame extends javax.swing.JFrame {
         pnl_searchResult = new javax.swing.JPanel();
         jcp_fav = new javax.swing.JScrollPane();
         favoritesFlowPanel = new javax.swing.JPanel();
-        jcp_bookmark = new javax.swing.JScrollPane();
-        bookmarkedFlowPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -322,26 +344,6 @@ public class MainFrame extends javax.swing.JFrame {
         pnl_fav.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(pnl_fav);
-
-        pnl_book.setBackground(new java.awt.Color(75, 85, 99));
-        pnl_book.setMaximumSize(new java.awt.Dimension(250, 50));
-        pnl_book.setMinimumSize(new java.awt.Dimension(250, 50));
-        pnl_book.setPreferredSize(new java.awt.Dimension(250, 50));
-        pnl_book.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_bookMouseClicked(evt);
-            }
-        });
-        pnl_book.setLayout(new java.awt.BorderLayout());
-
-        jLabel4.setBackground(new java.awt.Color(17, 22, 29));
-        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Bookmark");
-        pnl_book.add(jLabel4, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(pnl_book);
 
         asidePanel.add(jPanel4);
 
@@ -489,11 +491,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         MainLayeredPane.add(jcp_fav, "card4");
 
-        bookmarkedFlowPanel.setBackground(new java.awt.Color(31, 41, 55));
-        jcp_bookmark.setViewportView(bookmarkedFlowPanel);
-
-        MainLayeredPane.add(jcp_bookmark, "card5");
-
         getContentPane().add(MainLayeredPane, java.awt.BorderLayout.CENTER);
 
         getAccessibleContext().setAccessibleName("MainFrame");
@@ -515,17 +512,14 @@ public class MainFrame extends javax.swing.JFrame {
         System.out.println("Favorite");
         MainLayeredPane.removeAll();
         MainLayeredPane.add(jcp_fav);
+        try {
+            fetchFavorites();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         MainLayeredPane.repaint();
         MainLayeredPane.revalidate();
     }//GEN-LAST:event_pnl_favMouseClicked
-
-    private void pnl_bookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_bookMouseClicked
-        System.out.println("Bookmark");
-        MainLayeredPane.removeAll();
-        MainLayeredPane.add(jcp_bookmark);
-        MainLayeredPane.repaint();
-        MainLayeredPane.revalidate();
-    }//GEN-LAST:event_pnl_bookMouseClicked
 
     private void pnl_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_homeMouseClicked
         System.out.println("Home");
@@ -593,43 +587,39 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane MainLayeredPane;
-    private javax.swing.JPanel asidePanel;
-    private javax.swing.JPanel bookmarkedFlowPanel;
-    private javax.swing.JButton btn_search;
-    private javax.swing.JPanel favoritesFlowPanel;
-    private javax.swing.JPanel hero;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JScrollPane jcp_bookmark;
-    private javax.swing.JScrollPane jcp_fav;
-    private javax.swing.JScrollPane jcp_main;
-    private javax.swing.JScrollPane jcp_search;
-    private javax.swing.JLabel lbl_Logo;
-    private javax.swing.JLabel lbl_bgImg;
-    private javax.swing.JLabel lbl_movieDescription;
-    private javax.swing.JLabel lbl_movieRatings;
-    private javax.swing.JLabel lbl_movieTitle;
-    private javax.swing.JLabel lbl_username;
-    private javax.swing.JLabel lbl_username1;
-    private javax.swing.JPanel main;
-    private javax.swing.JPanel nav;
-    private javax.swing.JPanel pnl_body;
-    private javax.swing.JPanel pnl_book;
-    private javax.swing.JPanel pnl_fav;
-    private javax.swing.JPanel pnl_home;
-    private javax.swing.JPanel pnl_search;
-    private javax.swing.JPanel pnl_searchResult;
+    public javax.swing.JLayeredPane MainLayeredPane;
+    public javax.swing.JPanel asidePanel;
+    public javax.swing.JButton btn_search;
+    public javax.swing.JPanel favoritesFlowPanel;
+    public javax.swing.JPanel hero;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel10;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel8;
+    public javax.swing.JTextField jTextField1;
+    public javax.swing.JScrollPane jcp_fav;
+    public javax.swing.JScrollPane jcp_main;
+    public javax.swing.JScrollPane jcp_search;
+    public javax.swing.JLabel lbl_Logo;
+    public javax.swing.JLabel lbl_bgImg;
+    public javax.swing.JLabel lbl_movieDescription;
+    public javax.swing.JLabel lbl_movieRatings;
+    public javax.swing.JLabel lbl_movieTitle;
+    public javax.swing.JLabel lbl_username;
+    public javax.swing.JLabel lbl_username1;
+    public javax.swing.JPanel main;
+    public javax.swing.JPanel nav;
+    public javax.swing.JPanel pnl_body;
+    public javax.swing.JPanel pnl_fav;
+    public javax.swing.JPanel pnl_home;
+    public javax.swing.JPanel pnl_search;
+    public javax.swing.JPanel pnl_searchResult;
     // End of variables declaration//GEN-END:variables
 
 }

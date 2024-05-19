@@ -86,8 +86,7 @@ public class Database {
                 String[] fields = line.split("~");
                 FavoritesTemplate favorites = new FavoritesTemplate();
                 favorites.setUID(fields[0]);
-                favorites.setfavoritesID(fields[1]);
-                favorites.setMovieID(fields[2]);
+                favorites.setMovieID(fields[1]);
                 favoritesList.add(favorites);
             }
         } catch (IOException e) {
@@ -173,7 +172,6 @@ public class Database {
         }
     }
 
-
     private static void createFavoritesDB(String filename) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
             bw.write("UID~Movie ID\n"); // Header row
@@ -194,44 +192,16 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false; // Movie does not exist in favorites
+        return false; 
     }
 
     public void removeFavorites(String UID, String movieID) {
-        if (UID == null || UID.isEmpty() || movieID == null || movieID.isEmpty()) {
-            System.out.println("Invalid parameters.");
-            return;
-        }
+        List<FavoritesTemplate> favoritesList = getFavorites(); 
+        favoritesList.removeIf(favorites -> favorites.getUID().equals(UID) && favorites.getMovieID().equals(movieID));
 
-        if (!fileExists(CSV_FAVORITES)) {
-            System.out.println("Favorites database does not exist.");
-            return;
-        }
-
-        try {
-            File inputFile = new File(CSV_FAVORITES);
-            File tempFile = new File(FILE_DIR + "tempFavorites.csv");
-
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-
-            String currentLine;
-
-            while ((currentLine = reader.readLine()) != null) {
-                String[] data = currentLine.split("~");
-                if (data.length >= 3 && (!data[0].equals(UID) || !data[2].equals(movieID))) {
-                    writer.write(currentLine + System.getProperty("line.separator"));
-                }
-            }
-            writer.close();
-            reader.close();
-
-            if (!inputFile.delete()) {
-                System.out.println("Could not delete the original file.");
-                return;
-            }
-            if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Could not rename the temporary file.");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FAVORITES))) {
+            for (FavoritesTemplate favorites : favoritesList) {
+                bw.write(favorites.getUID() + "~" + favorites.getMovieID() + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
