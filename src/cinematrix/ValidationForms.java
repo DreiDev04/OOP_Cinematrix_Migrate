@@ -32,7 +32,7 @@ public class ValidationForms extends javax.swing.JFrame {
         txt_loginusername = new javax.swing.JTextField();
         pnl_loginpassword = new javax.swing.JPanel();
         lbl_loginpassword = new javax.swing.JLabel();
-        txt_loginpassword = new javax.swing.JTextField();
+        txt_loginpassword = new javax.swing.JPasswordField();
         pnl_buttonlogin = new javax.swing.JPanel();
         btn_login = new javax.swing.JButton();
         pnl_signup = new javax.swing.JPanel();
@@ -53,10 +53,10 @@ public class ValidationForms extends javax.swing.JFrame {
         txt_username = new javax.swing.JTextField();
         pnl_password = new javax.swing.JPanel();
         lbl_password = new javax.swing.JLabel();
-        txt_password = new javax.swing.JTextField();
+        txt_password = new javax.swing.JPasswordField();
         pnl_confirmpassword = new javax.swing.JPanel();
         lbl_confirmpassword = new javax.swing.JLabel();
-        txt_confirmpassword = new javax.swing.JTextField();
+        txt_confirmpassword = new javax.swing.JPasswordField();
         pnl_buttonsignup = new javax.swing.JPanel();
         btn_signup = new javax.swing.JButton();
         lbl_exit = new javax.swing.JLabel();
@@ -134,7 +134,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_loginusername.setText("Username");
         lbl_loginusername.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_loginusername.setText("Keazer Love Dabu Forever");
         txt_loginusername.setPreferredSize(new java.awt.Dimension(280, 25));
 
         javax.swing.GroupLayout pnl_loginusernameLayout = new javax.swing.GroupLayout(pnl_loginusername);
@@ -179,36 +178,30 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_loginpassword.setText("Password");
         lbl_loginpassword.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_loginpassword.setText("Keazer kiniss si dabu");
-        txt_loginpassword.setPreferredSize(new java.awt.Dimension(280, 25));
-
         javax.swing.GroupLayout pnl_loginpasswordLayout = new javax.swing.GroupLayout(pnl_loginpassword);
         pnl_loginpassword.setLayout(pnl_loginpasswordLayout);
         pnl_loginpasswordLayout.setHorizontalGroup(
             pnl_loginpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
+            .addComponent(txt_loginpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
             .addGroup(pnl_loginpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnl_loginpasswordLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(pnl_loginpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txt_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbl_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(lbl_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 194, Short.MAX_VALUE)))
         );
         pnl_loginpasswordLayout.setVerticalGroup(
             pnl_loginpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_loginpasswordLayout.createSequentialGroup()
+                .addGap(0, 28, Short.MAX_VALUE)
+                .addComponent(txt_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnl_loginpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnl_loginpasswordLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 1, Short.MAX_VALUE)
                     .addComponent(lbl_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(txt_loginpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 34, Short.MAX_VALUE)))
         );
 
         lbl_loginpassword.getAccessibleContext().setAccessibleName("lbl_loginpassword");
-        txt_loginpassword.getAccessibleContext().setAccessibleName("txt_loginpassword");
 
         jPanel1.add(pnl_loginpassword);
         pnl_loginpassword.getAccessibleContext().setAccessibleName("pnl_loginpassword");
@@ -230,12 +223,12 @@ public class ValidationForms extends javax.swing.JFrame {
             .addGroup(pnl_buttonloginLayout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         pnl_buttonloginLayout.setVerticalGroup(
             pnl_buttonloginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_buttonloginLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(btn_login)
                 .addContainerGap())
         );
@@ -278,7 +271,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_firstname.setText("First Name:");
         lbl_firstname.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_firstname.setText("Keazer");
         txt_firstname.setToolTipText("");
         txt_firstname.setPreferredSize(new java.awt.Dimension(280, 25));
 
@@ -323,7 +315,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_lastname.setText("Last Name:");
         lbl_lastname.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_lastname.setText("Love Dabu");
         txt_lastname.setPreferredSize(new java.awt.Dimension(280, 25));
 
         javax.swing.GroupLayout pnl_lastnameLayout = new javax.swing.GroupLayout(pnl_lastname);
@@ -367,7 +358,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_birthdate.setText("Birthday: (MM-dd-YYYY)");
         lbl_birthdate.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_birthday.setText("01-13-0001");
         txt_birthday.setPreferredSize(new java.awt.Dimension(280, 25));
 
         lbl_age.setBackground(new java.awt.Color(255, 255, 102));
@@ -377,7 +367,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_age.setText("Age:");
         lbl_age.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_age.setText("99");
         txt_age.setToolTipText("");
         txt_age.setPreferredSize(new java.awt.Dimension(280, 25));
 
@@ -432,7 +421,6 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_username.setText("Username:");
         lbl_username.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_username.setText("Keazer Love Dabu Forever");
         txt_username.setPreferredSize(new java.awt.Dimension(280, 25));
 
         javax.swing.GroupLayout pnl_usernameLayout = new javax.swing.GroupLayout(pnl_username);
@@ -476,36 +464,30 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_password.setText("Password:");
         lbl_password.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_password.setText("Keazer kiniss si dabu");
-        txt_password.setPreferredSize(new java.awt.Dimension(280, 25));
-
         javax.swing.GroupLayout pnl_passwordLayout = new javax.swing.GroupLayout(pnl_password);
         pnl_password.setLayout(pnl_passwordLayout);
         pnl_passwordLayout.setHorizontalGroup(
             pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
-            .addGroup(pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnl_passwordLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbl_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        pnl_passwordLayout.setVerticalGroup(
-            pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addComponent(txt_password, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
             .addGroup(pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnl_passwordLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(lbl_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        pnl_passwordLayout.setVerticalGroup(
+            pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_passwordLayout.createSequentialGroup()
+                .addGap(0, 20, Short.MAX_VALUE)
+                .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnl_passwordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnl_passwordLayout.createSequentialGroup()
+                    .addGap(0, 1, Short.MAX_VALUE)
+                    .addComponent(lbl_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 34, Short.MAX_VALUE)))
         );
 
         lbl_password.getAccessibleContext().setAccessibleName("lbl_password");
-        txt_password.getAccessibleContext().setAccessibleName("txt_password");
 
         jPanel5.add(pnl_password);
         pnl_password.getAccessibleContext().setAccessibleName("pnl_password");
@@ -520,36 +502,30 @@ public class ValidationForms extends javax.swing.JFrame {
         lbl_confirmpassword.setText("Confirm Password:");
         lbl_confirmpassword.setPreferredSize(new java.awt.Dimension(280, 15));
 
-        txt_confirmpassword.setText("Keazer kiniss si dabu");
-        txt_confirmpassword.setPreferredSize(new java.awt.Dimension(280, 25));
-
         javax.swing.GroupLayout pnl_confirmpasswordLayout = new javax.swing.GroupLayout(pnl_confirmpassword);
         pnl_confirmpassword.setLayout(pnl_confirmpasswordLayout);
         pnl_confirmpasswordLayout.setHorizontalGroup(
             pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 280, Short.MAX_VALUE)
-            .addGroup(pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnl_confirmpasswordLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbl_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        pnl_confirmpasswordLayout.setVerticalGroup(
-            pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addComponent(txt_confirmpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
             .addGroup(pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnl_confirmpasswordLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(lbl_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(5, 5, 5)
-                    .addComponent(txt_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        pnl_confirmpasswordLayout.setVerticalGroup(
+            pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_confirmpasswordLayout.createSequentialGroup()
+                .addGap(0, 20, Short.MAX_VALUE)
+                .addComponent(txt_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnl_confirmpasswordLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnl_confirmpasswordLayout.createSequentialGroup()
+                    .addGap(0, 1, Short.MAX_VALUE)
+                    .addComponent(lbl_confirmpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 34, Short.MAX_VALUE)))
         );
 
         lbl_confirmpassword.getAccessibleContext().setAccessibleName("txt_confirmpassword");
-        txt_confirmpassword.getAccessibleContext().setAccessibleName("txt_confirmpassword");
 
         jPanel5.add(pnl_confirmpassword);
         pnl_confirmpassword.getAccessibleContext().setAccessibleName("pnl_confirmpassword");
@@ -558,6 +534,11 @@ public class ValidationForms extends javax.swing.JFrame {
         pnl_buttonsignup.setPreferredSize(new java.awt.Dimension(280, 50));
 
         btn_signup.setText("Sign Up");
+        btn_signup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_signupMouseClicked(evt);
+            }
+        });
         btn_signup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_signupActionPerformed(evt);
@@ -650,26 +631,23 @@ public class ValidationForms extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-            auth.login(txt_loginusername.getText(), txt_loginpassword.getText());
-            
-            setVisible(false);
+        try {
+        // Convert char array to string for password
+        String password = new String(txt_loginpassword.getPassword());
+
+        // Call the login method with the username and password
+        auth.login(txt_loginusername.getText(), password);
+
+        // Hide the current window after successful login
+        setVisible(false);
+
+        // Optionally, you might want to show a success message or proceed to the next screen
+        JOptionPane.showMessageDialog(null, "Login Successful", "Information", JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        // Show an error message if login fails
+        JOptionPane.showMessageDialog(null, "Login Failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btn_loginActionPerformed
-
-    private void btn_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signupActionPerformed
-        if (!txt_password.getText().equals(txt_confirmpassword.getText())) {
-            return;
-        }
-        auth.signup(
-            txt_firstname.getText(),
-            txt_lastname.getText(),
-            LocalDate.parse(txt_birthday.getText(), DateTimeFormatter.ofPattern("MM-dd-yyyy")),
-            Integer.parseInt(txt_age.getText()),
-            txt_username.getText(),
-            txt_password.getText()
-        );
-        JOptionPane.showMessageDialog(null, "Sign Up Successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
-
-    }//GEN-LAST:event_btn_signupActionPerformed
 
     private void lbl_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_exitMouseClicked
         System.exit(0);
@@ -682,6 +660,38 @@ public class ValidationForms extends javax.swing.JFrame {
     private void lbl_exitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_exitMouseExited
         lbl_exit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_lbl_exitMouseExited
+
+    private void btn_signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_signupMouseClicked
+        // Convert char arrays to strings for comparison
+        String password = new String(txt_password.getPassword());
+        String confirmPassword = new String(txt_confirmpassword.getPassword());
+
+        // Check if passwords match
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Proceed with signup
+        try {
+            auth.signup(
+                    txt_firstname.getText(),
+                    txt_lastname.getText(),
+                    LocalDate.parse(txt_birthday.getText(), DateTimeFormatter.ofPattern("MM-dd-yyyy")),
+                    Integer.parseInt(txt_age.getText()),
+                    txt_username.getText(),
+                    password // Use the password string here
+            );
+            
+            JOptionPane.showMessageDialog(null, "Sign Up Successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sign Up Failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_signupMouseClicked
+
+    private void btn_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signupActionPerformed
+
+    }//GEN-LAST:event_btn_signupActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -751,12 +761,12 @@ public class ValidationForms extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_username;
     private javax.swing.JTextField txt_age;
     private javax.swing.JTextField txt_birthday;
-    private javax.swing.JTextField txt_confirmpassword;
+    private javax.swing.JPasswordField txt_confirmpassword;
     private javax.swing.JTextField txt_firstname;
     private javax.swing.JTextField txt_lastname;
-    private javax.swing.JTextField txt_loginpassword;
+    private javax.swing.JPasswordField txt_loginpassword;
     private javax.swing.JTextField txt_loginusername;
-    private javax.swing.JTextField txt_password;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }

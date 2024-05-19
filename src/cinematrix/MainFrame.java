@@ -249,6 +249,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("Log out");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
@@ -365,7 +370,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnl_body.setBackground(new java.awt.Color(31, 41, 55));
         pnl_body.setForeground(new java.awt.Color(31, 41, 55));
-        pnl_body.setPreferredSize(new java.awt.Dimension(1080, 4000));
+        pnl_body.setMinimumSize(new java.awt.Dimension(1080, 3000));
+        pnl_body.setPreferredSize(new java.awt.Dimension(1080, 3000));
         pnl_body.setLayout(new java.awt.BorderLayout());
 
         hero.setBackground(new java.awt.Color(31, 41, 55));
@@ -435,7 +441,8 @@ public class MainFrame extends javax.swing.JFrame {
         jcp_search.setPreferredSize(new java.awt.Dimension(580, 100));
 
         jPanel10.setBackground(new java.awt.Color(31, 41, 55));
-        jPanel10.setPreferredSize(new java.awt.Dimension(580, 1000));
+        jPanel10.setMinimumSize(new java.awt.Dimension(580, 2500));
+        jPanel10.setPreferredSize(new java.awt.Dimension(580, 2500));
         jPanel10.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setBackground(new java.awt.Color(17, 22, 29));
@@ -554,6 +561,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     public static void main(String args[]) {
 
