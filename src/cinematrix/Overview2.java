@@ -1,7 +1,6 @@
 package cinematrix;
 
 import backend.Database;
-import backend.FavoritesTemplate;
 import backend.Session;
 import org.json.JSONObject;
 import cinematrix.API_Key.TmdbClient;
@@ -10,26 +9,23 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class Overview extends javax.swing.JFrame {
+public class Overview2 extends javax.swing.JFrame {
 
     TmdbClient apiClient = new TmdbClient();
     private Database db = new Database();
     private Session _currUser;
-    private String thisMovieID;
     private String _movieID;
 
-    public Overview(int movieID, Session currUser, String localUID) throws IOException {
+    public Overview2(int movieID, Session currUser) throws IOException {
         _currUser = currUser;
-        thisMovieID = localUID;
         _movieID = String.valueOf(movieID);
 
         initComponents();
+
         System.out.println(movieID);
         JSONObject response = apiClient.searchID(movieID);
 
@@ -50,7 +46,6 @@ public class Overview extends javax.swing.JFrame {
             lbl_overvierPoster.setForeground(Color.white);
             lbl_overvierPoster.setFont(new Font("Cascadia Code", Font.BOLD, 14));
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -68,11 +63,8 @@ public class Overview extends javax.swing.JFrame {
         btn_overviewExitBtn = new javax.swing.JButton();
         lbl_overviewDescription = new javax.swing.JLabel();
         btn_removeFav = new javax.swing.JButton();
-        btn_fav = new javax.swing.JButton();
-        btn_hideRemove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(600, 700));
         setUndecorated(true);
         setResizable(false);
 
@@ -141,32 +133,12 @@ public class Overview extends javax.swing.JFrame {
                 btn_removeFavMouseClicked(evt);
             }
         });
+        btn_removeFav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removeFavActionPerformed(evt);
+            }
+        });
         lbl_overviewPoster.add(btn_removeFav, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, -1));
-
-        btn_fav.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
-        btn_fav.setText("Add to Favorites");
-        btn_fav.setBorder(null);
-        btn_fav.setPreferredSize(new java.awt.Dimension(150, 30));
-        btn_fav.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_favMouseClicked(evt);
-            }
-        });
-        lbl_overviewPoster.add(btn_fav, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, -1));
-
-        btn_hideRemove.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
-        btn_hideRemove.setText("Remove.");
-        btn_hideRemove.setToolTipText("");
-        btn_hideRemove.setBorder(null);
-        btn_hideRemove.setMaximumSize(new java.awt.Dimension(110, 15));
-        btn_hideRemove.setMinimumSize(new java.awt.Dimension(0, 0));
-        btn_hideRemove.setPreferredSize(new java.awt.Dimension(1, 1));
-        btn_hideRemove.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_hideRemoveMouseClicked(evt);
-            }
-        });
-        lbl_overviewPoster.add(btn_hideRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, -1, -1));
 
         jPanel1.add(lbl_overviewPoster, java.awt.BorderLayout.CENTER);
 
@@ -177,37 +149,26 @@ public class Overview extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_overviewExitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_overviewExitBtnActionPerformed
-
         this.dispose();
     }//GEN-LAST:event_btn_overviewExitBtnActionPerformed
 
-    private void btn_favMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_favMouseClicked
+    private void btn_removeFavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removeFavMouseClicked
         if (_movieID != null) {
-            if (!db.isMovieAlreadyInFavorites(_currUser.getUserUID(), _movieID)) {
-                db.addFavorites(new FavoritesTemplate(_currUser.getUserUID(), thisMovieID, _movieID));
-                JOptionPane.showMessageDialog(null, "Movie added to favorites.");
+            if (db.isMovieAlreadyInFavorites(_currUser.getUserUID(), _movieID)) {
+                db.removeFavorites(_currUser.getUserUID(), _movieID);
+                JOptionPane.showMessageDialog(null, "Movie removed from favorites.");
             } else {
-                JOptionPane.showMessageDialog(null, "Movie already exists in favorites.");
+                JOptionPane.showMessageDialog(null, "Movie not found in favorites.");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Movie ID is null.");
         }
-    }//GEN-LAST:event_btn_favMouseClicked
 
-    private void btn_removeFavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_removeFavMouseClicked
-        String userID = _currUser.getUserUID();
-        if (db.isMovieAlreadyInFavorites(userID, _movieID)) {
-            db.removeFavorites(userID, _movieID); // Remove the favorite for the current user
-            JOptionPane.showMessageDialog(null, "Movie removed from favorites.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Movie not found in favorites.");
-        }
-        
     }//GEN-LAST:event_btn_removeFavMouseClicked
 
-    private void btn_hideRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hideRemoveMouseClicked
-
-    }//GEN-LAST:event_btn_hideRemoveMouseClicked
+    private void btn_removeFavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeFavActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_removeFavActionPerformed
 
     public static void main(String args[]) {
 
@@ -223,21 +184,20 @@ public class Overview extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Overview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Overview2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Overview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Overview2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Overview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Overview2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Overview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Overview2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_fav;
-    private javax.swing.JButton btn_hideRemove;
     private javax.swing.JButton btn_overviewExitBtn;
     private javax.swing.JButton btn_removeFav;
     private javax.swing.JPanel jPanel1;
@@ -251,31 +211,5 @@ public class Overview extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_overviewTitle;
     // End of variables declaration//GEN-END:variables
 
-    public Overview(int movieID, Session currUser) throws IOException {
-        _currUser = currUser;
-        _movieID = String.valueOf(movieID);
-
-        initComponents();
-
-        System.out.println(movieID);
-        JSONObject response = apiClient.searchID(movieID);
-
-        lbl_overviewTitle.setText("<html>" + response.getString("original_title") + "<html>");
-        lbl_overviewDescription.setText("<html>" + response.getString("overview") + "</html>");
-        lbl_overviewRating.setText("Rating:" + response.get("vote_average").toString());
-        lbl_overviewTime.setText("Duration: " + response.get("runtime"));
-        lbl_overviewReleaseDate.setText(response.getString("release_date"));
-
-        String posterPathURL = "";
-        String backdropPath = response.optString("backdrop_path", "");
-        if (!backdropPath.isEmpty()) {
-            posterPathURL = "https://image.tmdb.org/t/p/w500" + backdropPath;
-            BufferedImage image = ImageIO.read(new URL(posterPathURL));
-            lbl_overvierPoster.setIcon(new ImageIcon(image));
-        } else {
-            lbl_overvierPoster.setText("No Poster");
-            lbl_overvierPoster.setForeground(Color.white);
-            lbl_overvierPoster.setFont(new Font("Cascadia Code", Font.BOLD, 14));
-        }
-    }
+    
 }

@@ -1,6 +1,7 @@
 package cinematrix;
 
 import Splashscreen.LoadingSplash;
+import backend.FavoritesTemplate;
 import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
@@ -19,21 +20,18 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.swing.ImageIcon;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.List;
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
-import java.util.Random;
-import javax.swing.Icon;
 import javax.swing.JPanel;
+import backend.Database;
+import java.awt.event.ActionEvent;
+import java.util.TimerTask;
+import javax.swing.Timer;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -71,7 +69,9 @@ public class MainFrame extends javax.swing.JFrame {
     TMDB_api tmdb = new TMDB_api();
     Session _currUser = new Session();
     TmdbClient apiClient = new TmdbClient();
+    Database db = new Database();
     LoadingSplash loadingSplash;
+    private Timer fetchTimer;
 
     public MainFrame(Session currUser, LoadingSplash ls) {
         initComponents();
@@ -83,8 +83,28 @@ public class MainFrame extends javax.swing.JFrame {
         }
         _currUser = currUser;
 
+        lbl_username.setText("<html>" + _currUser.getUsername() + "</html>");
+
         fetchAndDisplayMovies();
 
+    }
+
+    public void fetchFavorites() throws IOException {
+        favoritesFlowPanel.removeAll();
+
+        List<FavoritesTemplate> favoritesList = db.getFavorites();
+
+        for (FavoritesTemplate favorite : favoritesList) {
+            if (_currUser.getUserUID().equals(favorite.getUID())) {
+                int movieID = Integer.parseInt(favorite.getMovieID());
+
+                favoritesFlowPanel.add(new moviepanel(movieID, _currUser));
+            }
+
+        }
+
+        favoritesFlowPanel.revalidate();
+        favoritesFlowPanel.repaint();
     }
 
     private void fetchAndDisplayMovies() {
@@ -93,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
             // Fetch popular movies
             String popularMoviesJson = apiClient.fetchPopularMovies();
             displayMovies(popularMoviesJson, "Popular Movies");
-
+            setMovie(popularMoviesJson);
             // Fetch top-rated movies
             String trendingDay = apiClient.fetchTrendingDay();
             displayMovies(trendingDay, "Trending Today");
@@ -106,11 +126,15 @@ public class MainFrame extends javax.swing.JFrame {
             String topRatedMoviesJson = apiClient.fetchTopRatedMovies();
             displayMovies(topRatedMoviesJson, "Top Rated Movies");
 
-            // Fetch Neflix Series
-            String netflixSeries = apiClient.fetchNetflix();
-            setMovie(netflixSeries);
-            displayMovies(netflixSeries, "Netflix Series");
+            // Fetch top-rated movies
+            String cinemaPH = apiClient.fetchCinemaPH();
+            displayMovies(cinemaPH, "Now Showing Movies");
 
+            // KULANG SA TIME SIR KAYA DI TATANGGALIN KO NA TONG NETFLIX
+            // Fetch Neflix Series
+//            String netflixSeries = apiClient.fetchNetflix();
+//            setMovie(netflixSeries);
+//            displayMovies(netflixSeries, "Netflix Series");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +144,7 @@ public class MainFrame extends javax.swing.JFrame {
         JSONObject jsonObject = new JSONObject(moviesJson);
         JSONArray results = jsonObject.getJSONArray("results");
 
-        main.add(new Features(results, title, loadingSplash, this));
+        main.add(new Features(results, title, loadingSplash, this, _currUser));
 
     }
 
@@ -132,17 +156,19 @@ public class MainFrame extends javax.swing.JFrame {
             int randomIndex = (int) (Math.random() * results.length());
             JSONObject randomMovie = results.getJSONObject(randomIndex);
 
-            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_name") + "<html>");
+            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_title") + "<html>");
             lbl_movieDescription.setText("<html>" + randomMovie.getString("overview") + "</html>");
             lbl_movieRatings.setText(randomMovie.get("vote_average").toString());
 
             int movieID = randomMovie.getInt("id");
             String posterPath = apiClient.requestPoster(movieID);
 
-            BufferedImage image = ImageIO.read(new URL(posterPath));
-
-            lbl_bgImg.setIcon(new ImageIcon(image));
-
+            if (posterPath != null) {
+                BufferedImage image = ImageIO.read(new URL(posterPath));
+                lbl_bgImg.setIcon(new ImageIcon(image));
+            } else {
+                // Handle case where posterPath is null
+            }
         }
     }
 
@@ -160,7 +186,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         asidePanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbl_username = new javax.swing.JLabel();
+        lbl_username1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         pnl_home = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -168,8 +195,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pnl_fav = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        pnl_book = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         MainLayeredPane = new javax.swing.JLayeredPane();
         jcp_main = new javax.swing.JScrollPane();
         pnl_body = new javax.swing.JPanel();
@@ -188,9 +213,7 @@ public class MainFrame extends javax.swing.JFrame {
         btn_search = new javax.swing.JButton();
         pnl_searchResult = new javax.swing.JPanel();
         jcp_fav = new javax.swing.JScrollPane();
-        jPanel5 = new javax.swing.JPanel();
-        jcp_bookmark = new javax.swing.JScrollPane();
-        jPanel6 = new javax.swing.JPanel();
+        favoritesFlowPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -245,11 +268,17 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(250, 75));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("<Username>");
-        jLabel1.setName(""); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 30));
+        lbl_username.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
+        lbl_username.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_username.setText("Welcome!");
+        lbl_username.setName(""); // NOI18N
+        jPanel3.add(lbl_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 230, 40));
+
+        lbl_username1.setFont(new java.awt.Font("Candara Light", 1, 14)); // NOI18N
+        lbl_username1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_username1.setText("Welcome!");
+        lbl_username1.setName(""); // NOI18N
+        jPanel3.add(lbl_username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 230, 40));
 
         asidePanel.add(jPanel3);
 
@@ -315,26 +344,6 @@ public class MainFrame extends javax.swing.JFrame {
         pnl_fav.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(pnl_fav);
-
-        pnl_book.setBackground(new java.awt.Color(75, 85, 99));
-        pnl_book.setMaximumSize(new java.awt.Dimension(250, 50));
-        pnl_book.setMinimumSize(new java.awt.Dimension(250, 50));
-        pnl_book.setPreferredSize(new java.awt.Dimension(250, 50));
-        pnl_book.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_bookMouseClicked(evt);
-            }
-        });
-        pnl_book.setLayout(new java.awt.BorderLayout());
-
-        jLabel4.setBackground(new java.awt.Color(17, 22, 29));
-        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Bookmark");
-        pnl_book.add(jLabel4, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(pnl_book);
 
         asidePanel.add(jPanel4);
 
@@ -437,7 +446,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(75, 85, 99));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Interstellar");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(107, 114, 128)));
         jTextField1.setMaximumSize(new java.awt.Dimension(300, 30));
         jTextField1.setMinimumSize(new java.awt.Dimension(300, 30));
@@ -458,6 +466,11 @@ public class MainFrame extends javax.swing.JFrame {
                 btn_searchMouseClicked(evt);
             }
         });
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
         jPanel8.add(btn_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, 40));
 
         jPanel10.add(jPanel8, java.awt.BorderLayout.PAGE_START);
@@ -473,15 +486,10 @@ public class MainFrame extends javax.swing.JFrame {
         MainLayeredPane.setLayer(jcp_search, javax.swing.JLayeredPane.PALETTE_LAYER);
         MainLayeredPane.add(jcp_search, "card3");
 
-        jPanel5.setBackground(new java.awt.Color(51, 0, 51));
-        jcp_fav.setViewportView(jPanel5);
+        favoritesFlowPanel.setBackground(new java.awt.Color(31, 41, 55));
+        jcp_fav.setViewportView(favoritesFlowPanel);
 
         MainLayeredPane.add(jcp_fav, "card4");
-
-        jPanel6.setBackground(new java.awt.Color(102, 51, 0));
-        jcp_bookmark.setViewportView(jPanel6);
-
-        MainLayeredPane.add(jcp_bookmark, "card5");
 
         getContentPane().add(MainLayeredPane, java.awt.BorderLayout.CENTER);
 
@@ -504,17 +512,14 @@ public class MainFrame extends javax.swing.JFrame {
         System.out.println("Favorite");
         MainLayeredPane.removeAll();
         MainLayeredPane.add(jcp_fav);
+        try {
+            fetchFavorites();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         MainLayeredPane.repaint();
         MainLayeredPane.revalidate();
     }//GEN-LAST:event_pnl_favMouseClicked
-
-    private void pnl_bookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_bookMouseClicked
-        System.out.println("Bookmark");
-        MainLayeredPane.removeAll();
-        MainLayeredPane.add(jcp_bookmark);
-        MainLayeredPane.repaint();
-        MainLayeredPane.revalidate();
-    }//GEN-LAST:event_pnl_bookMouseClicked
 
     private void pnl_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_homeMouseClicked
         System.out.println("Home");
@@ -525,7 +530,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pnl_homeMouseClicked
 
     private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseClicked
-
+        pnl_searchResult.removeAll();
         String query = jTextField1.getText().toString();
         try {
             JSONObject searchResult = apiClient.querySearch(query);
@@ -533,7 +538,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             for (int i = 0; i < results.length(); i++) {
                 JSONObject movie = results.getJSONObject(i);
-                JPanel panel = new moviepanel(movie);
+                JPanel panel = new moviepanel(movie, _currUser);
                 panel.setBackground(new Color(0x374151, false));
                 pnl_searchResult.add(panel);
             }
@@ -545,6 +550,10 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_searchMouseClicked
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_searchActionPerformed
 
     public static void main(String args[]) {
 
@@ -578,42 +587,39 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane MainLayeredPane;
-    private javax.swing.JPanel asidePanel;
-    private javax.swing.JButton btn_search;
-    private javax.swing.JPanel hero;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JScrollPane jcp_bookmark;
-    private javax.swing.JScrollPane jcp_fav;
-    private javax.swing.JScrollPane jcp_main;
-    private javax.swing.JScrollPane jcp_search;
-    private javax.swing.JLabel lbl_Logo;
-    private javax.swing.JLabel lbl_bgImg;
-    private javax.swing.JLabel lbl_movieDescription;
-    private javax.swing.JLabel lbl_movieRatings;
-    private javax.swing.JLabel lbl_movieTitle;
-    private javax.swing.JPanel main;
-    private javax.swing.JPanel nav;
-    private javax.swing.JPanel pnl_body;
-    private javax.swing.JPanel pnl_book;
-    private javax.swing.JPanel pnl_fav;
-    private javax.swing.JPanel pnl_home;
-    private javax.swing.JPanel pnl_search;
-    private javax.swing.JPanel pnl_searchResult;
+    public javax.swing.JLayeredPane MainLayeredPane;
+    public javax.swing.JPanel asidePanel;
+    public javax.swing.JButton btn_search;
+    public javax.swing.JPanel favoritesFlowPanel;
+    public javax.swing.JPanel hero;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel10;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel8;
+    public javax.swing.JTextField jTextField1;
+    public javax.swing.JScrollPane jcp_fav;
+    public javax.swing.JScrollPane jcp_main;
+    public javax.swing.JScrollPane jcp_search;
+    public javax.swing.JLabel lbl_Logo;
+    public javax.swing.JLabel lbl_bgImg;
+    public javax.swing.JLabel lbl_movieDescription;
+    public javax.swing.JLabel lbl_movieRatings;
+    public javax.swing.JLabel lbl_movieTitle;
+    public javax.swing.JLabel lbl_username;
+    public javax.swing.JLabel lbl_username1;
+    public javax.swing.JPanel main;
+    public javax.swing.JPanel nav;
+    public javax.swing.JPanel pnl_body;
+    public javax.swing.JPanel pnl_fav;
+    public javax.swing.JPanel pnl_home;
+    public javax.swing.JPanel pnl_search;
+    public javax.swing.JPanel pnl_searchResult;
     // End of variables declaration//GEN-END:variables
 
 }
