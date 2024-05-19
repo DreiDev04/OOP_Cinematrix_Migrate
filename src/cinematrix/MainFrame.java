@@ -5,7 +5,9 @@ import backend.Session;
 import cinematrix.API_Key.TMDB_api;
 import cinematrix.API_Key.TmdbClient;
 import cinematrix.Panels.Features;
+import cinematrix.Panels.moviepanel;
 import cinematrix.custom_ui.CustomScrollBarUI;
+import java.awt.Color;
 import java.io.IOException;
 
 import java.security.KeyManagementException;
@@ -31,6 +33,7 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Icon;
+import javax.swing.JPanel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -73,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame(Session currUser, LoadingSplash ls) {
         initComponents();
         loadingSplash = ls;
-        body.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        jcp_main.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 
         if (currUser == null) {
             throw new IllegalArgumentException("currUser cannot be null");
@@ -129,15 +132,15 @@ public class MainFrame extends javax.swing.JFrame {
             int randomIndex = (int) (Math.random() * results.length());
             JSONObject randomMovie = results.getJSONObject(randomIndex);
 
-            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_name")+ "<html>");
+            lbl_movieTitle.setText("<html>" + randomMovie.getString("original_name") + "<html>");
             lbl_movieDescription.setText("<html>" + randomMovie.getString("overview") + "</html>");
             lbl_movieRatings.setText(randomMovie.get("vote_average").toString());
 
             int movieID = randomMovie.getInt("id");
             String posterPath = apiClient.requestPoster(movieID);
-            
+
             BufferedImage image = ImageIO.read(new URL(posterPath));
-            
+
             lbl_bgImg.setIcon(new ImageIcon(image));
 
         }
@@ -159,14 +162,16 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        pnl_home = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        pnl_search = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnl_fav = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        pnl_book = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         MainLayeredPane = new javax.swing.JLayeredPane();
-        body = new javax.swing.JScrollPane();
+        jcp_main = new javax.swing.JScrollPane();
         pnl_body = new javax.swing.JPanel();
         hero = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -176,6 +181,16 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lbl_bgImg = new javax.swing.JLabel();
         main = new javax.swing.JPanel();
+        jcp_search = new javax.swing.JScrollPane();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        btn_search = new javax.swing.JButton();
+        pnl_searchResult = new javax.swing.JPanel();
+        jcp_fav = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
+        jcp_bookmark = new javax.swing.JScrollPane();
+        jPanel6 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinematrix");
@@ -243,48 +258,83 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel4.setMinimumSize(new java.awt.Dimension(250, 300));
         jPanel4.setPreferredSize(new java.awt.Dimension(250, 300));
 
-        jPanel5.setBackground(new java.awt.Color(75, 85, 99));
-        jPanel5.setMaximumSize(new java.awt.Dimension(250, 50));
-        jPanel5.setMinimumSize(new java.awt.Dimension(250, 50));
-        jPanel5.setPreferredSize(new java.awt.Dimension(250, 50));
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        pnl_home.setBackground(new java.awt.Color(75, 85, 99));
+        pnl_home.setMaximumSize(new java.awt.Dimension(250, 50));
+        pnl_home.setMinimumSize(new java.awt.Dimension(250, 50));
+        pnl_home.setPreferredSize(new java.awt.Dimension(250, 50));
+        pnl_home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_homeMouseClicked(evt);
+            }
+        });
+        pnl_home.setLayout(new java.awt.BorderLayout());
+
+        jLabel6.setBackground(new java.awt.Color(17, 22, 29));
+        jLabel6.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Home");
+        pnl_home.add(jLabel6, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(pnl_home);
+
+        pnl_search.setBackground(new java.awt.Color(75, 85, 99));
+        pnl_search.setMaximumSize(new java.awt.Dimension(250, 50));
+        pnl_search.setMinimumSize(new java.awt.Dimension(250, 50));
+        pnl_search.setPreferredSize(new java.awt.Dimension(250, 50));
+        pnl_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_searchMouseClicked(evt);
+            }
+        });
+        pnl_search.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Search");
-        jPanel5.add(jLabel2, java.awt.BorderLayout.CENTER);
+        pnl_search.add(jLabel2, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanel5);
+        jPanel4.add(pnl_search);
 
-        jPanel6.setBackground(new java.awt.Color(75, 85, 99));
-        jPanel6.setMaximumSize(new java.awt.Dimension(250, 50));
-        jPanel6.setMinimumSize(new java.awt.Dimension(250, 50));
-        jPanel6.setPreferredSize(new java.awt.Dimension(250, 50));
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        pnl_fav.setBackground(new java.awt.Color(75, 85, 99));
+        pnl_fav.setMaximumSize(new java.awt.Dimension(250, 50));
+        pnl_fav.setMinimumSize(new java.awt.Dimension(250, 50));
+        pnl_fav.setPreferredSize(new java.awt.Dimension(250, 50));
+        pnl_fav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_favMouseClicked(evt);
+            }
+        });
+        pnl_fav.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Favorites");
-        jPanel6.add(jLabel3, java.awt.BorderLayout.CENTER);
+        pnl_fav.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanel6);
+        jPanel4.add(pnl_fav);
 
-        jPanel7.setBackground(new java.awt.Color(75, 85, 99));
-        jPanel7.setMaximumSize(new java.awt.Dimension(250, 50));
-        jPanel7.setMinimumSize(new java.awt.Dimension(250, 50));
-        jPanel7.setPreferredSize(new java.awt.Dimension(250, 50));
-        jPanel7.setLayout(new java.awt.BorderLayout());
+        pnl_book.setBackground(new java.awt.Color(75, 85, 99));
+        pnl_book.setMaximumSize(new java.awt.Dimension(250, 50));
+        pnl_book.setMinimumSize(new java.awt.Dimension(250, 50));
+        pnl_book.setPreferredSize(new java.awt.Dimension(250, 50));
+        pnl_book.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnl_bookMouseClicked(evt);
+            }
+        });
+        pnl_book.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setBackground(new java.awt.Color(17, 22, 29));
         jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Bookmark");
-        jPanel7.add(jLabel4, java.awt.BorderLayout.CENTER);
+        pnl_book.add(jLabel4, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanel7);
+        jPanel4.add(pnl_book);
 
         asidePanel.add(jPanel4);
 
@@ -295,14 +345,14 @@ public class MainFrame extends javax.swing.JFrame {
         MainLayeredPane.setMaximumSize(new java.awt.Dimension(1080, 32767));
         MainLayeredPane.setMinimumSize(new java.awt.Dimension(1080, 0));
         MainLayeredPane.setPreferredSize(new java.awt.Dimension(1080, 100));
-        MainLayeredPane.setLayout(new java.awt.BorderLayout());
+        MainLayeredPane.setLayout(new java.awt.CardLayout());
 
-        body.setBackground(new java.awt.Color(31, 41, 55));
-        body.setForeground(new java.awt.Color(31, 41, 55));
-        body.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        body.setMaximumSize(new java.awt.Dimension(1080, 670));
-        body.setMinimumSize(new java.awt.Dimension(1080, 670));
-        body.setPreferredSize(new java.awt.Dimension(1080, 670));
+        jcp_main.setBackground(new java.awt.Color(31, 41, 55));
+        jcp_main.setForeground(new java.awt.Color(31, 41, 55));
+        jcp_main.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jcp_main.setMaximumSize(new java.awt.Dimension(1080, 670));
+        jcp_main.setMinimumSize(new java.awt.Dimension(1080, 670));
+        jcp_main.setPreferredSize(new java.awt.Dimension(1080, 670));
 
         pnl_body.setBackground(new java.awt.Color(31, 41, 55));
         pnl_body.setForeground(new java.awt.Color(31, 41, 55));
@@ -366,9 +416,72 @@ public class MainFrame extends javax.swing.JFrame {
         main.setLayout(flowLayout1);
         pnl_body.add(main, java.awt.BorderLayout.CENTER);
 
-        body.setViewportView(pnl_body);
+        jcp_main.setViewportView(pnl_body);
 
-        MainLayeredPane.add(body, java.awt.BorderLayout.CENTER);
+        MainLayeredPane.setLayer(jcp_main, javax.swing.JLayeredPane.PALETTE_LAYER);
+        MainLayeredPane.add(jcp_main, "card2");
+
+        jcp_search.setBackground(new java.awt.Color(31, 41, 55));
+        jcp_search.setMinimumSize(new java.awt.Dimension(580, 100));
+        jcp_search.setPreferredSize(new java.awt.Dimension(580, 100));
+
+        jPanel10.setBackground(new java.awt.Color(31, 41, 55));
+        jPanel10.setPreferredSize(new java.awt.Dimension(580, 1000));
+        jPanel10.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setBackground(new java.awt.Color(17, 22, 29));
+        jPanel8.setMaximumSize(new java.awt.Dimension(100, 75));
+        jPanel8.setMinimumSize(new java.awt.Dimension(100, 75));
+        jPanel8.setPreferredSize(new java.awt.Dimension(100, 75));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.setBackground(new java.awt.Color(75, 85, 99));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setText("Interstellar");
+        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(107, 114, 128)));
+        jTextField1.setMaximumSize(new java.awt.Dimension(300, 30));
+        jTextField1.setMinimumSize(new java.awt.Dimension(300, 30));
+        jTextField1.setName(""); // NOI18N
+        jTextField1.setPreferredSize(new java.awt.Dimension(300, 30));
+        jPanel8.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, 40));
+
+        btn_search.setBackground(new java.awt.Color(75, 85, 99));
+        btn_search.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btn_search.setForeground(new java.awt.Color(255, 255, 255));
+        btn_search.setText("Search");
+        btn_search.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btn_search.setMaximumSize(new java.awt.Dimension(100, 30));
+        btn_search.setMinimumSize(new java.awt.Dimension(100, 30));
+        btn_search.setPreferredSize(new java.awt.Dimension(100, 30));
+        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_searchMouseClicked(evt);
+            }
+        });
+        jPanel8.add(btn_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, 40));
+
+        jPanel10.add(jPanel8, java.awt.BorderLayout.PAGE_START);
+
+        pnl_searchResult.setBackground(new java.awt.Color(31, 41, 55));
+        pnl_searchResult.setMaximumSize(new java.awt.Dimension(580, 3000));
+        pnl_searchResult.setMinimumSize(new java.awt.Dimension(580, 100));
+        pnl_searchResult.setPreferredSize(new java.awt.Dimension(580, 1000));
+        jPanel10.add(pnl_searchResult, java.awt.BorderLayout.CENTER);
+
+        jcp_search.setViewportView(jPanel10);
+
+        MainLayeredPane.setLayer(jcp_search, javax.swing.JLayeredPane.PALETTE_LAYER);
+        MainLayeredPane.add(jcp_search, "card3");
+
+        jPanel5.setBackground(new java.awt.Color(51, 0, 51));
+        jcp_fav.setViewportView(jPanel5);
+
+        MainLayeredPane.add(jcp_fav, "card4");
+
+        jPanel6.setBackground(new java.awt.Color(102, 51, 0));
+        jcp_bookmark.setViewportView(jPanel6);
+
+        MainLayeredPane.add(jcp_bookmark, "card5");
 
         getContentPane().add(MainLayeredPane, java.awt.BorderLayout.CENTER);
 
@@ -378,6 +491,60 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pnl_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_searchMouseClicked
+        System.out.println("Search");
+        MainLayeredPane.removeAll();
+        MainLayeredPane.add(jcp_search);
+        MainLayeredPane.repaint();
+        MainLayeredPane.revalidate();
+    }//GEN-LAST:event_pnl_searchMouseClicked
+
+    private void pnl_favMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_favMouseClicked
+        System.out.println("Favorite");
+        MainLayeredPane.removeAll();
+        MainLayeredPane.add(jcp_fav);
+        MainLayeredPane.repaint();
+        MainLayeredPane.revalidate();
+    }//GEN-LAST:event_pnl_favMouseClicked
+
+    private void pnl_bookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_bookMouseClicked
+        System.out.println("Bookmark");
+        MainLayeredPane.removeAll();
+        MainLayeredPane.add(jcp_bookmark);
+        MainLayeredPane.repaint();
+        MainLayeredPane.revalidate();
+    }//GEN-LAST:event_pnl_bookMouseClicked
+
+    private void pnl_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_homeMouseClicked
+        System.out.println("Home");
+        MainLayeredPane.removeAll();
+        MainLayeredPane.add(jcp_main);
+        MainLayeredPane.repaint();
+        MainLayeredPane.revalidate();
+    }//GEN-LAST:event_pnl_homeMouseClicked
+
+    private void btn_searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseClicked
+
+        String query = jTextField1.getText().toString();
+        try {
+            JSONObject searchResult = apiClient.querySearch(query);
+            JSONArray results = searchResult.getJSONArray("results");
+
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject movie = results.getJSONObject(i);
+                JPanel panel = new moviepanel(movie);
+                panel.setBackground(new Color(0x374151, false));
+                pnl_searchResult.add(panel);
+            }
+
+            // Repaint and revalidate the search result panel to reflect the changes
+            pnl_searchResult.revalidate();
+            pnl_searchResult.repaint();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_searchMouseClicked
 
     public static void main(String args[]) {
 
@@ -413,20 +580,27 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane MainLayeredPane;
     private javax.swing.JPanel asidePanel;
-    private javax.swing.JScrollPane body;
+    private javax.swing.JButton btn_search;
     private javax.swing.JPanel hero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jcp_bookmark;
+    private javax.swing.JScrollPane jcp_fav;
+    private javax.swing.JScrollPane jcp_main;
+    private javax.swing.JScrollPane jcp_search;
     private javax.swing.JLabel lbl_Logo;
     private javax.swing.JLabel lbl_bgImg;
     private javax.swing.JLabel lbl_movieDescription;
@@ -435,177 +609,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel main;
     private javax.swing.JPanel nav;
     private javax.swing.JPanel pnl_body;
+    private javax.swing.JPanel pnl_book;
+    private javax.swing.JPanel pnl_fav;
+    private javax.swing.JPanel pnl_home;
+    private javax.swing.JPanel pnl_search;
+    private javax.swing.JPanel pnl_searchResult;
     // End of variables declaration//GEN-END:variables
 
-//    private void Discover_Movies(String movieURL) {
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url(movieURL)
-//                .get()
-//                .addHeader("accept", "application/json")
-//                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDAxZWJiYTI1OThhNzUwYTcxNGM1NzcyZWQwNWE4MiIsInN1YiI6IjY2MTk3YTZkZTRjOWViMDE0OTJhM2EyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MIhpoHFGzh7zeoF8xdVRzh1wIxJ10CfnR7cKpS0PPk8")
-//                .build();
-//
-//        try {
-//            Response response = client.newCall(request).execute();
-//            ResponseBody responseBody = response.body();
-//            if (responseBody != null) {
-//                String jsonData = responseBody.string();
-//                JSONObject jsonResponse = new JSONObject(jsonData);
-//                JSONArray results = jsonResponse.getJSONArray("results");
-//                for (int i = 0; i < results.length(); i++) {
-//                    JSONObject movie = results.getJSONObject(i);
-//
-//                    String title = movie.getString("title");
-//                    String posterPath = movie.getString("poster_path");
-//                    String overview = movie.getString("overview");
-//
-//                    String posterPathURL = "https://image.tmdb.org/t/p/w500" + posterPath;
-//                    int movieID = movie.getInt("id");
-//                    JSONArray genres = movie.getJSONArray("genre_ids");
-//                    System.out.println("Title: " + title);
-//                    System.out.println("ID: " + movieID);
-//                    System.out.println("Genres: " + genres);
-//                    System.out.println("Path: " + posterPathURL);
-//                    System.out.println("Overview: " + overview);
-//                    System.out.println("-------------------------------------");
-//
-//                }
-//            }
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    private void Discover_TV(String TVUrl) {
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url(TVUrl)
-//                .get()
-//                .addHeader("accept", "application/json")
-//                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDAxZWJiYTI1OThhNzUwYTcxNGM1NzcyZWQwNWE4MiIsInN1YiI6IjY2MTk3YTZkZTRjOWViMDE0OTJhM2EyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MIhpoHFGzh7zeoF8xdVRzh1wIxJ10CfnR7cKpS0PPk8")
-//                .build();
-//
-//        try {
-//            Response response = client.newCall(request).execute();
-//            ResponseBody responseBody = response.body();
-//
-//            if (responseBody != null) {
-//                String jsonData = responseBody.string();
-//                JSONObject jsonResponse = new JSONObject(jsonData);
-//                JSONArray results = jsonResponse.getJSONArray("results");
-//
-//                SetBGPoster(results);
-//
-//                for (int i = 0; i < results.length(); i++) {
-//                    JSONObject movie = results.getJSONObject(i);
-//                    String title = movie.getString("name");
-//                    String posterPath = movie.getString("poster_path");
-//                    String posterPathURL = "https://image.tmdb.org/t/p/w500" + posterPath;
-////                    System.out.println("Title: " + title);
-////                    System.out.println("Path: " + posterPathURL);
-//
-//                }
-//            }
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public void SetBGPoster(JSONArray results) throws IOException {
-//        ArrayList<JSONObject> TVList = new ArrayList<>();
-//        Random random = new Random();
-//
-//        for (int i = 0; i < results.length(); i++) {
-//            JSONObject movie = results.getJSONObject(i);
-//            TVList.add(movie);
-//        }
-//
-//        int randomIndex = random.nextInt(TVList.size());
-//        JSONObject randomElement = TVList.get(randomIndex);
-//        String posterPath = requestPoster(randomElement.getInt("id"));
-//        String posterPathURL = "https://image.tmdb.org/t/p/w500" + posterPath;
-//
-//        try {
-//            URL posterUrl = new URL(posterPathURL);
-//            BufferedImage originalImage = ImageIO.read(posterUrl);
-//
-//            // Desired width and height
-//            int desiredWidth = 1080;
-//            int desiredHeight = 300;
-//
-//            // Calculate the aspect ratio of the original image
-//            double aspectRatio = (double) originalImage.getWidth() / originalImage.getHeight();
-//
-//            // Calculate the desired width and height based on the aspect ratio
-//            int targetWidth = (int) Math.round(desiredHeight * aspectRatio);
-//            int targetHeight = (int) Math.round(desiredWidth / aspectRatio);
-//
-//            // Determine which dimension to crop
-//            int cropX = 0;
-//            int cropY = 0;
-//            int cropWidth = originalImage.getWidth();
-//            int cropHeight = originalImage.getHeight();
-//            if (targetWidth > desiredWidth) {
-//                cropWidth = (int) Math.round(originalImage.getHeight() * (desiredWidth / (double) targetWidth));
-//                cropX = (originalImage.getWidth() - cropWidth) / 2;
-//            } else {
-//                cropHeight = (int) Math.round(originalImage.getWidth() * (desiredHeight / (double) targetHeight));
-//                cropY = (originalImage.getHeight() - cropHeight) / 2;
-//            }
-//
-//            // Crop the image
-//            BufferedImage croppedImage = originalImage.getSubimage(cropX, cropY, cropWidth, cropHeight);
-//
-//            // Scale the cropped image to fit within the desired dimensions
-//            Image scaledImage = croppedImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-//
-//            // Create a new ImageIcon with the scaled image
-//            ImageIcon icon = new ImageIcon(scaledImage);
-//
-//            // Set the ImageIcon to the JLabel
-//            lbl_bgImg.setIcon(icon);
-//
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-//
-//    public String requestPoster(int movieId) throws IOException {
-//        OkHttpClient client = new OkHttpClient();
-//
-//        String url = "https://api.themoviedb.org/3/tv/" + movieId + "/images";
-//
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .get()
-//                .addHeader("accept", "application/json")
-//                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NDAxZWJiYTI1OThhNzUwYTcxNGM1NzcyZWQwNWE4MiIsInN1YiI6IjY2MTk3YTZkZTRjOWViMDE0OTJhM2EyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MIhpoHFGzh7zeoF8xdVRzh1wIxJ10CfnR7cKpS0PPk8")
-//                .build();
-//
-//        // Execute the request and handle the response
-//        try (Response response = client.newCall(request).execute()) {
-//            if (!response.isSuccessful()) {
-//                throw new IOException("Unexpected code " + response);
-//            }
-//            String responseBody = response.body().string();
-//
-//            if (responseBody != null) {
-//                String jsonData = responseBody;
-//                JSONObject jsonResponse = new JSONObject(jsonData);
-//                JSONArray results = jsonResponse.getJSONArray("backdrops");
-//
-//                for (int i = 0; i < results.length(); i++) {
-//                    JSONObject bg = results.getJSONObject(i);
-//                    if (bg.getDouble("aspect_ratio") >= 1) {
-//                        return bg.getString("file_path");
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
 }
